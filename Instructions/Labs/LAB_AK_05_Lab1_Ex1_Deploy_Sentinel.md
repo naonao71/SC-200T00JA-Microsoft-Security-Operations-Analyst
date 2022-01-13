@@ -70,9 +70,9 @@ Host5
 7. コマンド バーから「**+ 新規追加**」を選択します。
 
 8. ウォッチリスト ウィザードで、次のように入力します。
-    名前: HighValueHosts
-    説明: High Value Hosts
-    ウォッチリストエイリアス：HighValueHosts
+- 名前: HighValueHosts
+- 説明: High Value Hosts
+- ウォッチリストエイリアス：HighValueHosts
 
 9. 「**次へ: ソース >**」を選択します。
 
