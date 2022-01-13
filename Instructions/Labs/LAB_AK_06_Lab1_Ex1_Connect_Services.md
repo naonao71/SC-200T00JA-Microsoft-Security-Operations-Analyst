@@ -80,7 +80,7 @@
 
 3. 構成領域で、「**接続**」を選択します。
 
-### タスク 7: Microsoft Defender for forIdentity コネクタに接続する
+### タスク 7: Microsoft Defender for Identity コネクタに接続する
 
 このタスクでは、Microsoft Defender for Identity コネクタの確認をします。
 
@@ -112,9 +112,9 @@
 
 4. 「**変更の適用**」を選択します。
 
-### タスク 10: Azure Activity コネクタを接続する。
+### タスク 10: Azure アクティビティ コネクタを接続する。
 
-このタスクでは、Azure Activity コネクタを接続します。
+このタスクでは、Azure アクティビティ コネクタを接続します。
 
 1. データ コネクタ タブで、リストから「**Azure アクティビティ**」コネクタを選択します。
 
