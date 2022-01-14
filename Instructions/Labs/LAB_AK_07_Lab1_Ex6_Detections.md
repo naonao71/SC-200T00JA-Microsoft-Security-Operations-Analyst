@@ -258,8 +258,8 @@ DeviceRegistryEvents
 
 |設定|値|
 |:----|:----|
-|名前 |D4E Startup RegKey|
-|説明 |D4E Startup Regkey in c:\temp|
+|名前 |MDE Startup RegKey|
+|説明 |MDE Startup Regkey in c:\temp|
 |戦術 |Persistence|
 |重大度 |高|
 
