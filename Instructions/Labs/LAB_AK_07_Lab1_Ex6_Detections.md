@@ -310,8 +310,8 @@ search "administrators"
 ```
 
 4. 結果は次の表を示します。
-    Event
-    SecurityEvent
+- Event
+- SecurityEvent
 
 5. 最初のデータソースはSecurityEventです。特権グループへのメンバーの追加を識別するためにWindowsが使用するイベントIDを調査するときが来ました。探していた EventID と Event は "4732 - A member was added to a security-enabled local group" でした。次のスクリプトを実行して確認します。
 
