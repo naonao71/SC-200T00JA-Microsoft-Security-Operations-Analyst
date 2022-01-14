@@ -27,9 +27,9 @@ search "temp\\startup.bat"
 ```
 
 10. 結果は、3つの異なるテーブルについて示しています。
-    - DeviceProcessEvents
-    - DeviceRegistryEvents
-    - Event
+- DeviceProcessEvents
+- DeviceRegistryEvents
+- Event
 
     **Device** テーブルは、Defender for Endpoint コネクタに由来します。**Event** テーブルのデータは、エージェント構成を通して接続された Sysmon/Operational Windows Event Logs から入力されます。
 
