@@ -1,5 +1,11 @@
 # モジュール 6 - ラボ 1 - 演習 3 - データ コネクタを使用して Linux ホストを Microsoft Sentinel に接続する
 
+## ラボ シナリオ
+
+![Lab overview.](../Media/SC-200-Lab_Diagrams_Mod6_L1_Ex3.png)
+
+あなたは、Microsoft Sentinelを導入した企業に勤務するセキュリティ・オペレーション・アナリストです。あなたは、組織内の多くのデータソースからログデータを接続する方法を学ぶ必要があります。次のデータソースは、Common Event Formatting (CEF)とSyslogコネクタを使用するLinux仮想マシンです。
+
 ### タスク 1: Microsoft Sentinel ワークスペースにアクセスする。
 
 このタスクでは、Microsoft Sentinel ワークスペースにアクセスします。
