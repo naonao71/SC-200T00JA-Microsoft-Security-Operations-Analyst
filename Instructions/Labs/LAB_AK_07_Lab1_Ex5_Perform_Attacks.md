@@ -1,5 +1,11 @@
 # モジュール 7 - ラボ 1 - 演習 5 - 攻撃の実施
 
+## ラボ シナリオ
+
+![Lab overview.](../Media/SC-200-Lab_Diagrams_Mod7_L1_Ex5.png)
+
+後にMicrosoft Sentinelで検知・調査するために使用する攻撃をシミュレートすることになります。
+
 ### タスク 1: Defender for Endpoint によって構成した Windows を攻撃します。
 
 このタスクでは、Microsoft Defender for Endpoint が構成されているホストに対して攻撃を実行します。
