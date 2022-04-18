@@ -2,6 +2,8 @@
 
 ## ラボ シナリオ
 
+![Lab overview.](../Media/SC-200-Lab_Diagrams_Mod3_L1_Ex1.png)
+
 あなたは、Microsoft Defender for Cloud を使用してクラウド ワークロード保護を実装している企業に勤務するセキュリティ オペレーションアナリストです。  このラボでは、Microsoft Defender for Cloud を有効化します。
 
 ### タスク 1: Azure ポータル にアクセスし、サブスクリプションを設定します。
