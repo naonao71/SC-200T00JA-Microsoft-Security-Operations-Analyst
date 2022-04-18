@@ -2,7 +2,11 @@
 
 ## ラボ シナリオ
 
-あなたは Microsoft Sentinel を実装済みの会社で働いているセキュリティ オペレーションアナリストです。高度な視覚化を使用してワークブックを設計する必要があります。
+![Lab overview.](../Media/SC-200-Lab_Diagrams_Mod7_L1_Ex8.png)
+
+あなたは、Microsoft Sentinelを導入した企業で働くセキュリティオペレーションアナリストです。データソースをMicrosoft Sentinelに接続したら、Microsoft Sentinelが採用したAzure Monitor Workbooksを使ってデータを可視化し、監視することができます。
+
+Microsoft Sentinelでは、データ全体でカスタムワークブックを作成できるほか、ワークブックテンプレートも組み込まれており、データソースを接続するとすぐにデータ全体の洞察を得ることができます。
 
 ### タスク 1: ワークブックを調べる
 
