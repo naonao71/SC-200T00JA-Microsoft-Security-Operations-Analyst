@@ -2,6 +2,8 @@
 
 ## ラボ シナリオ
 
+![Lab overview.](../Media/SC-200-Lab_Diagrams_Mod3_L1_Ex2.png)
+
 あなたは Microsoft Defender for Cloud. を実装している企業で働くセキュリティ オペレーション アナリストです。Microsoft Defender for Cloud. によって生成されたセキュリティ アラートに応答する必要があります。
 
 ### タスク 1: セキュリティ・アラートを軽減する
