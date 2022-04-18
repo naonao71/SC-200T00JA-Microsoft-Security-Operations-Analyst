@@ -8,6 +8,8 @@ lab:
 
 ## ラボ シナリオ
 
+![M365 Defender](../Media/SC-200-Lab_M1_L1_Ex1.png)
+
 あなたは Microsoft 365 Defender を実装している企業で働くセキュリティ オペレーションアナリストです。EOP と Microsoft Defender for Office 365 に事前設定されたセキュリティ ポリシーを割り当てることにより開始しました。
 
 ### タスク 1: Microsoft 365 資格情報の取得
