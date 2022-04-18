@@ -2,6 +2,8 @@
 
 ## ラボ シナリオ
 
+![Lab overview.](../Media/SC-200-Lab_Diagrams_Mod5_L1_Ex1.png)
+
 あなたは、Microsoft Sentinel を実装しようとしている企業で働いているセキュリティ オペレーションアナリストです。コストを最小限に抑え、コンプライアンス規制を満たし、セキュリティ チームが日常の職務を遂行するのに最も管理しやすい環境を提供するという会社の要件を満たすように、Microsoft Sentinel 環境を設定する責任があります。
 
 ### タスク 1: Microsoft Sentinel ワークスペースを初期化する。
