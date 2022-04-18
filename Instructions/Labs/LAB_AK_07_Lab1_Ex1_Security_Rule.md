@@ -2,7 +2,9 @@
 
 ## ラボ シナリオ
 
-あなたは Microsoft Sentinel を実装した企業で働いているセキュリティ オペレーションアナリストです。Microsoft Sentinelを使った脅威の検出と軽減方法を学習する必要があります。  他のMicrosoft 365とAzureサービスからのアラートを有効にする必要があります。  
+![Lab overview.](../Media/SC-200-Lab_Diagrams_Mod7_L1_Ex1.png)
+
+あなたは、Microsoft Sentinelを導入した企業に勤務するセキュリティ・オペレーション・アナリストです。Microsoft Sentinelを使用して、脅威を検出し、軽減する方法を学ぶ必要があります。まず、Defender for CloudからMicrosoft Sentinelに来るアラートを重要度によってフィルタリングする必要があります。 
 
 ### タスク 1: Microsoft Security ルールの有効化
 
