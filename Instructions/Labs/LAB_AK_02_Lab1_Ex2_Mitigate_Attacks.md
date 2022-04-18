@@ -2,6 +2,8 @@
 
 ## ラボ シナリオ
 
+![Lab overview.](../Media/SC-200-Lab_Diagrams_Mod2_L1_Ex2.png)
+
 あなたは Microsoft Defender for Endpoint を実装している企業で働くセキュリティ オペレーション アナリストです。あなたの上司は、いくつかのデバイスをオンボードして、セキュリティ オペレーション (SecOps) チームの応答手順で必要な変更に関する情報を提供しようとしています。
 
 Defender for Endpoint の攻撃緩和機能を確認するため、シミュレーション攻撃を 2 回行います。
