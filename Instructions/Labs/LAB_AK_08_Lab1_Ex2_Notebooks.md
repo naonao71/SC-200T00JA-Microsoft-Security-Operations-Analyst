@@ -2,6 +2,8 @@
 
 ## ラボ シナリオ
 
+![Lab overview.](../Media/SC-200-Lab_Diagrams_Mod8_L1_Ex2.png)
+
 あなたは Microsoft Sentinel を実装した企業で働いているセキュリティ オペレーションアナリストです。Microsoft Sentinel ノートブック を使った脅威ハンティングの利点を調査する必要があります。
 
 ### タスク 1: ノートブックのハンティング
