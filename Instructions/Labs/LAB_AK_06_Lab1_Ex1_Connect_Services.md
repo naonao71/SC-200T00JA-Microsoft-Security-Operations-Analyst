@@ -2,6 +2,8 @@
 
 ## ラボ シナリオ
 
+![Lab overview.](../Media/SC-200-Lab_Diagrams_Mod6_L1_Ex1.png)
+
 あなたは Microsoft Sentinel を実装した企業で働いているセキュリティ オペレーションアナリストです。組織内の多くのデータ ソースからのログ データを接続する方法について学習する必要があります。組織には、Microsoft 365、Microsoft 365 Defender、Azure リソース、Azure 以外の仮想マシン、ネットワーク アプライアンスからのデータがあります。
 
 あなたは、Microsoft Sentinel データ コネクタを使用して、さまざまなソースからのログ データを統合することを計画しています。組織の各データ ソースを適切な Microsoft Sentinel データ コネクタにマップする管理用のコネクタ計画を作成する必要があります。
