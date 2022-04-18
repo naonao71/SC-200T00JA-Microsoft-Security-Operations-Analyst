@@ -1,5 +1,11 @@
 # モジュール 6 -ラボ 1 - 演習 2 - データ コネクタを使用して Windows デバイスを Microsoft Sentinel に接続する
 
+## ラボ シナリオ
+
+![Lab overview.](../Media/SC-200-Lab_Diagrams_Mod6_L1_Ex2.png)
+
+あなたは、Microsoft Sentinelを導入した企業に勤務するセキュリティ・オペレーション・アナリストです。あなたは、組織内の多くのデータソースからログデータを接続する方法を学ぶ必要があります。次のデータソースは、オンプレミス環境や他のパブリッククラウドのように、Azureの内外にあるWindows仮想マシンです。
+
 ### タスク 1: Azure で Windows 仮想マシンを作成する
 
 このタスクでは、Azure で Windows 仮想マシンを作成します。
