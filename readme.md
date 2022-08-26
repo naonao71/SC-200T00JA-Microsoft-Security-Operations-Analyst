@@ -1,4 +1,7 @@
-﻿# SC-200: マイクロソフト・セキュリティ オペレーション・アナリスト
+# Repo Archived!
+This repo has been archived. Please refer to the new repo for this course at https://github.com/MicrosoftLearning/SC-200T00A-Microsoft-Security-Operations-Analyst.ja-jp
+
+# SC-200: マイクロソフト・セキュリティ オペレーション・アナリスト
 
 このリポジトリには、以下のコースの実験手順が含まれています：
 
