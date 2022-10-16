@@ -1,5 +1,7 @@
 # モジュール 6 -ラボ 1 -演習 4 - データ コネクタを使用して脅威インテリジェンスを Microsoft Sentinel に接続する
 
+**Anomali Limo サービスは2022年8月14日に停止したためこの演習はできません。**
+
 ## ラボ シナリオ
 
 ![Lab overview.](../Media/SC-200-Lab_Diagrams_Mod6_L1_Ex4.png)
