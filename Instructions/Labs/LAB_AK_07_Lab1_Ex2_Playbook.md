@@ -50,19 +50,19 @@
 
 4. Azure portal の検索バーに「**Sentinel**」と入力してから、「**Microsoft Sentinel**」を選択します。
 
-5. 先ほど作成した Azure Sentinel ワークスペースを選択します。
+5. 先ほど作成した Microsoft Sentinel ワークスペースを選択します。
 
 6. ページの左側にある**コンテンツ管理**領域で、「**コミュニティ**」ページを選択します。
 
-7. 右側のペインで、「**Onboard community content**」 (コミュニティのコンテンツをオンボードする) リンクを選択します。これにより、Microsoft Sentinel GitHub コンテンツに対する新しいタブが Microsoft Edge ブラウザーで開きます。
+7. 右側のペインで、「**コミュニティのコンテンツをオンボードする**」リンクを選択します。これにより、Microsoft Sentinel GitHub コンテンツに対する新しいタブが Microsoft Edge ブラウザーで開きます。
 
-8. 「**Playbooks**」フォルダーを選択します。
+8. 「**Azure-Sentinel/Solutions/SentinelSOARessentials/Playbooks/**」フォルダーを選択します。
 
 9. 「**Post-Message-Teams**」フォルダーを選択します。
 
-10. readme.md ボックスで、2 番目の**Quick Deployment** オプションである「**Deploy with alert trigger**」 (アラート トリガーを使用してデプロイ) の下に移動し、「**Deploy to Azure**」 (Azure にデプロイ) ボタンを選択します。  
+10. readme.md をクリックし、2 番目の**Quick Deployment** オプションである「**Deploy with alert trigger**」 (アラート トリガーを使用してデプロイ) の下に移動し、「**Deploy to Azure**」 (Azure にデプロイ) ボタンを選択します。  
 
-**非常に重要**: これらは、インシデントとアラートを使用するための 2 つの異なる Azure Sentinel トリガーであることに注意してください。2 番目のアラートを選択していることを確認してください。
+**非常に重要**: これらは、インシデントとアラートを使用するための 2 つの異なる Microsoft Sentinel トリガーであることに注意してください。2 番目のアラートを選択していることを確認してください。
 
 11. Azure サブスクリプションが選択されていることを確認してください。
 
