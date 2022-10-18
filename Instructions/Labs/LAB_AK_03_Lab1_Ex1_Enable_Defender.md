@@ -134,11 +134,11 @@
 
 このタスクでは、必要なエージェントをWindowsServerに手動でインストールします。
 
-1. "Microsoft Defender for Cloud" に移動し、「**はじめに**」ページを選択します。
+1. "Microsoft Defender for Cloud" に移動します。
 
-2. 「**作業の開始**」 タブを選択します。
+2. 「**インベントリ**」 を選択します。
 
-3. 下にスクロールして、「**Add non-Azure servers**」 (非 Azure サーバーの追加) セクションの下で、「**構成**」を選択します。
+3. メニューから「**非 Azure サーバーの追加**」をクリックします。
 
 4. 前に作成したワークスペースの横にある「**アップグレード**」を選択します。  これには数分かかる場合があります。**"Defender plans for workspace were saved successfully"** (ワークスペース用 Defender プランが正常に保存されました) という通知が表示されるまで待機します。
 
