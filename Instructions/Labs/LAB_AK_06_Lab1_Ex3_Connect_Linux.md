@@ -120,4 +120,3 @@ ssh <insert your linux IP address here> -l <insert linux user name here>
 
 9. 「**適用**」を選択します。  このタスクが完了しました。
 
-## 演習 4 に進みます。
