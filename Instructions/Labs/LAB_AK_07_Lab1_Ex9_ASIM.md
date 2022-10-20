@@ -1,38 +1,34 @@
 ---
 lab:
-    title: 'Exercise 9 - Create ASIM parsers'
-    module: 'Module 7 - Create detections and perform investigations using Microsoft Sentinel'
+    title: '演習 9 - ASIM パーサーの作成'
+    module: 'モジュール 7 - Microsoft Sentinel を使用した検出の作成と調査の実行'
 ---
 
-# Module 7 - Lab 1 - Exercise 9 - Create ASIM parsers
+# モジュール 7 - ラボ 1 - 演習 9 - ASIM パーサーの作成
 
-## Lab scenario
+## ラボのシナリオ
 
-You are a Security Operations Analyst working at a company that implemented Microsoft Sentinel. You need to model ASIM parsers for a specific Windows registry event.  These simplified parsers will be finalized at a later time following the ASIM parser registry event normalization standard (https://docs.microsoft.com/en-us/azure/sentinel/registry-event-normalization-schema).
+あなたは、Microsoft Sentinelを実装した会社で働くセキュリティ運用アナリストです。特定の Windows レジストリー・イベント用に ASIM パーサーをモデル化する必要があります。これらの単純化されたパーサーは、ASIM パーサー・レジストリー・イベント正規化標準 (https://docs.microsoft.com/en-us/azure/sentinel/registry-event-normalization-schema) に従って、後で最終化されます。
 
->**Important:** This lab involves entering lengthy KQL ASIM parser scripts into Microsoft Sentinel. The scripts were provided via download files at the beginning of this lab. An alternate location to download them is:  https://github.com/MicrosoftLearning/SC-200T00A-Microsoft-Security-Operations-Analyst/tree/master/Allfiles
+### タスク 1: Microsoft 365 Defender レジストリイベントの KQL 関数を開発する
 
-### Task 1: Develop KQL Function for Microsoft 365 Defender Registry Event 
+このタスクでは、DeviceRegistryEvents のワークスペース パーサーである関数を作成します。
 
-In this task, you create a function that is a workspace parser for DeviceRegistryEvents. 
+1. 管理者として WIN1 仮想マシンにログインします。パスワードは**Pa55w.rd** です。  
 
-1. Log in to WIN1 virtual machine as Admin with the password: **Pa55w.rd**.  
+1. Microsoft Edge ブラウザーで Azure portal (https://portal.azure.com) に移動します。
 
-1. In the Edge browser, navigate to the Azure portal at https://portal.azure.com.
+1. **サインイン** ダイアログ ボックスで、ラボ ホスティング プロバイダーから提供された**テナントのメール** アカウントをコピーして貼り付け、「**次へ**」を選択します。
 
-1. In the **Sign in** dialog box, copy and paste in the **Tenant Email** account provided by your lab hosting provider and then select **Next**.
+1. **パスワードの入力**ダイアログ ボックスで、ラボ ホスティング プロバイダーから提供された**テナントパスワード** をコピーして貼り付け、「**サインイン**」を選択します。
 
-1. In the **Enter password** dialog box, copy and paste in the **Tenant Password** provided by your lab hosting provider and then select **Sign in**.
+1. Azure portal の検索バーに「*Sentinel*」と入力してから、「**Microsoft Sentinel**」を選択します。
 
-1. In the Search bar of the Azure portal, type *Sentinel*, then select **Microsoft Sentinel**.
+1. Microsoft Sentinel ワークスペースを選択します。
 
-1. Select your Microsoft Sentinel Workspace you created earlier.
+1. 「**ログ**」を選択する 
 
-1. Select the **Logs** page.
-
-1. Open the **SC200_module7_ASIM_Parser_scripts.txt** you downloaded and copy and paste the *Task 1 Script* KQL statements into a new query tab.
-
-    >**Note:** The script below is only shown for reference; take time to review the KQL query.
+1. 新規クエリ1のスペースに以下のKQLステートメントを入力します。
 
     ```KQL
     let RegistryType = datatable (TypeCode: string, TypeName: string) [
@@ -116,31 +112,29 @@ In this task, you create a function that is a workspace parser for DeviceRegistr
     RegistryEvents_M365D
     ```
 
-1. Select **Run** to confirm the KQL is valid.
+1. 「実行」 を選択して、KQL が有効であることを確認します。
 
-1. Select **Save**, then **Save as function**.
+1. 「保存」を選択し、「関数として保存」を選択します。
 
-1. Under *Save as function* set the following:
+1. 「関数として保存」で、以下を設定します。
 
-    |Setting|Value|
+    |設定|値|
     |---|---|
-    |Function name|vimRegEvtM365D|
-    |Legacy Category|MyASIM|
+    |関数名|vimRegEvtM365D|
+    |従来のカテゴリ|MyASIM|
 
-1. Then select **Save**.
+1. 「保存」 を選択します。
 
-1. In a new query tab, enter **vimRegEvtM365D** and select **Run**.
+1. 新しいクエリ タブで、**vimRegEvtM365D** と入力し **実行** を選択します。
 
 
-### Task 2: Develop KQL Function for SecurityEvent table. 
+### タスク 2: セキュリティ イベント テーブルの KQL 関数を開発します。
 
-In this task, you create a function that is a workspace parser for SecurityEvent.
+このタスクでは、SecurityEvent のワークスペース パーサーである関数を作成します。
 
-1. Create a new query tab.
+1. 新しいクエリ タブを作成します。
 
-1. Go back to the **SC200_module7_ASIM_Parser_scripts.txt** you downloaded and copy and paste the *Task 2 Script* KQL statements into the new query tab.
-
-    >**Note:** The script below is only shown for reference; take time to review the KQL query.
+1. 新規クエリ2 のスペースに、以下のKQLステートメントを入力します。
 
     ```KQL
     let RegistryType = datatable (TypeCode: string, TypeName: string) [
@@ -228,29 +222,29 @@ In this task, you create a function that is a workspace parser for SecurityEvent
     RegistryEvents
     ```
 
-1. Select **Run** to confirm the KQL is valid.
+1. 「実行」 を選択して、KQL が有効であることを確認します。
 
-1. Select **Save**, then **Save as function**.
+1. 「保存」を選択し、「関数として保存」を選択します。
 
-1. Under *Save as function* set the following:
+1. 「関数として保存」で、以下を設定します。
 
-    |Setting|Value|
+    |設定|値|
     |---|---|
-    |Function name|vimRegEvtSecurityEvent|
-    |Legacy Category|MyASIM|
+    |関数名|vimRegEvtSecurityEvent|
+    |従来のカテゴリ|MyASIM|
 
-1. Then select **Save**.
+1. 「保存」 を選択します。
 
-1. In a new query tab, enter **vimRegEvtSecurityEvent** and select **Run**.
+1. 新しいクエリ タブで、**vimRegEvtSecurityEvent** と入力し **実行** を選択します。
 
 
-### Task 3: Create a unifying workspace parser. 
+### タスク 3: 統合ワークスペース パーサーを作成します。
 
-In this task, you create a unifying parser function that combines the previous two functions.  
+このタスクでは、前の 2 つの関数を組み合わせた統合パーサー関数を作成します。
 
-1. Create a new query tab.
+1. 新しいクエリ タブを作成します。
 
-1. Enter the following KQL Statement in a new query tab:
+1. 新しいクエリタブに、以下のKQLステートメントを入力します。
 
     ```KQL
     union isfuzzy=true
@@ -258,27 +252,25 @@ In this task, you create a unifying parser function that combines the previous t
     vimRegEvtSecurityEvent
     ```
 
-1. Select **Run** to confirm the KQL is valid.
+1. 「実行」 を選択して、KQL が有効であることを確認します。
 
-1. Select **Save**, then **Save as function**.
+1. 「保存」を選択し、「関数として保存」を選択します。
 
-1. Under *Save as function* set the following:
+1. 「関数として保存」で、以下を設定します。
 
-    |Setting|Value|
+    |設定|値|
     |---|---|
-    |Function name|imRegEvt|
-    |Legacy Category|MyASIM|
+    |関数名|imRegEvt|
+    |従来のカテゴリ|MyASIM|
 
-1. Then select **Save**.
+1. 「保存」 を選択します。
 
-1. In a new query tab, enter **imRegEvt** and select **Run**.
+1. 新しいクエリ タブで、**imRegEvt** と入力し **実行** を選択します。
 
-1. Update the query to the following and select **Run**:
+1. クエリを次のように更新し、「実行」 を選択します。
 
     ```KQL
     imRegEvt
     | where ActionType == 'RegistryValueSet'
     ```
-
-## Proceed to Exercise 10
 
