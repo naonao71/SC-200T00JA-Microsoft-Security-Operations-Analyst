@@ -1,4 +1,4 @@
-# モジュール 7 - ラボ 1 - 演習 5 - 攻撃の実施
+# モジュール 7 - ラボ 1 - 演習  - 攻撃の実施
 
 ## ラボ シナリオ
 
@@ -122,4 +122,4 @@ net user theusernametoadd ThePassword1!
 net localgroup administrators theusernametoadd /add
 ```
 
-## 演習 6 に進みます。
+## 演習 7 に進みます。
