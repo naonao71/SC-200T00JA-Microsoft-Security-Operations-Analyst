@@ -57,8 +57,8 @@ DeviceEvents
 | where ActionType == "DnsQueryResponse"
 | extend c2 = substring(tostring(AdditionalFields.DnsQueryString),0,indexof(tostring(AdditionalFields.DnsQueryString),"."))
 | where c2 startswith "sub"
-| summarize cnt=count() by bin(TimeGenerated, 5m), c2, DeviceName
-| where cnt > 15
+| summarize cnt=count() by bin(TimeGenerated, 3m), c2, DeviceName
+| where cnt > 5
 ```
 
    ![スクリーンショット](../Media/SC200_hunting2.png)
@@ -80,8 +80,8 @@ DeviceEvents
 | where ActionType == "DnsQueryResponse"
 | extend c2 = substring(tostring(AdditionalFields.DnsQueryString),0,indexof(tostring(AdditionalFields.DnsQueryString),"."))
 | where c2 startswith "sub"
-| summarize cnt=count() by bin(TimeGenerated, 5m), c2, DeviceName
-| where cnt > 15
+| summarize cnt=count() by bin(TimeGenerated, 3m), c2, DeviceName
+| where cnt > 5
 ```
 
 15. **エンティティ マッピング (プレビュー)** で、以下を選択します。
