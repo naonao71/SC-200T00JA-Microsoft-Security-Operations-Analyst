@@ -140,11 +140,11 @@ DeviceEvents
 
 1. 分析ルール ウィザードを構成します。
 
-    |Setting|Value|
+    |項目|値|
     |---|---|
     |名前|**NRT C2 Hunt**|
-    |Description|**NRT C2 Hunt**|
-    |Tactics|**Command and Control**|
+    |説明|**NRT C2 Hunt**|
+    |戦術と手法|**Command and Control**|
     |重大度|**高**|
 
 1. 「次：ルールのロジックを設定>」をクリックします。
