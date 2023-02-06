@@ -20,7 +20,7 @@ cd \
 mkdir temp
 cd temp
 ```
-4. 攻撃 1 -このコマンドをコピーしてコマンド プロンプト アプリに実行します。
+4. 攻撃 1 -このコマンドをコピーして実行します。
 
 ```
 REG ADD "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /V "SOC Test" /t REG_SZ /F /D "C:\temp\startup.bat"

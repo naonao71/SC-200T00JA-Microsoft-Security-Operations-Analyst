@@ -57,8 +57,8 @@ DeviceEvents
 | where ActionType == "DnsQueryResponse"
 | extend c2 = substring(tostring(AdditionalFields.DnsQueryString),0,indexof(tostring(AdditionalFields.DnsQueryString),"."))
 | where c2 startswith "sub"
-| summarize cnt=count() by bin(TimeGenerated, 5m), c2, DeviceName
-| where cnt > 15
+| summarize cnt=count() by bin(TimeGenerated, 3m), c2, DeviceName
+| where cnt > 5
 ```
 
    ![スクリーンショット](../Media/SC200_hunting2.png)
@@ -69,7 +69,9 @@ DeviceEvents
 
 12. コマンド バーで「**+ 新しいクエリ**」を選択します。
 
-13. **カスタム クエリ**には、次の KQL ステートメントを入力します。
+13. 名前には「**C2 Hunt**」と入力します。
+
+14. **カスタム クエリ**には、次の KQL ステートメントを入力します。
 
 ```KQL
 let lookback = 2d;
@@ -78,11 +80,9 @@ DeviceEvents
 | where ActionType == "DnsQueryResponse"
 | extend c2 = substring(tostring(AdditionalFields.DnsQueryString),0,indexof(tostring(AdditionalFields.DnsQueryString),"."))
 | where c2 startswith "sub"
-| summarize cnt=count() by bin(TimeGenerated, 5m), c2, DeviceName
-| where cnt > 15
+| summarize cnt=count() by bin(TimeGenerated, 3m), c2, DeviceName
+| where cnt > 5
 ```
-
-14. 名前には「**C2 Hunt**」と入力します。
 
 15. **エンティティ マッピング (プレビュー)** で、以下を選択します。
 
@@ -100,9 +100,9 @@ DeviceEvents
 
 19. 画面の右側の「**クリエの実行**」ボタンを選択します。
 
-20. 結果のカウントは、フライアウトの上部に表示されます。
+20. 結果の数は、結果の列の下に表示されます。
 
-21. 「**結果の表示**」ボタンを選択します。
+21. 「**結果の表示**」ボタンを選択します。KQLクエリが自動的に実行されます。
 
 22. 結果の最初の行を選択します。 
 
@@ -130,4 +130,42 @@ DeviceEvents
 
 34. 「**ライブストリームに追加**」を選択します。
 
-# 演習 2 に進みます。
+### タスク 2: NRTクエリルールの作成
+
+このタスクでは、ライブストリームを使用する代わりに、NRT 分析クエリ ルールを作成します。NRT ルールは 1 分ごとに実行され、1 分間振り返ります。NRT ルールの利点は、アラートとインシデント作成ロジックを使用できることです。
+
+1. Microsoft Sentinel の分析をクリックします。
+
+1. メニューから作成を選択し、NRTクエリルールをクリックします。
+
+1. 分析ルール ウィザードを構成します。
+
+    |項目|値|
+    |---|---|
+    |名前|**NRT C2 Hunt**|
+    |説明|**NRT C2 Hunt**|
+    |戦術と手法|**Command and Control**|
+    |重大度|**高**|
+
+1. 「次：ルールのロジックを設定>」をクリックします。
+
+1. ルールのクエリに以下のKQLクエリを入力します。
+
+    ```KQL
+    let lookback = 2d;
+    DeviceEvents | where TimeGenerated >= ago(lookback) 
+    | where ActionType == "DnsQueryResponse"
+    | extend c2 = substring(tostring(AdditionalFields.DnsQueryString),0,indexof(tostring(AdditionalFields.DnsQueryString),"."))
+    | where c2 startswith "sub"
+    | summarize cnt=count() by bin(TimeGenerated, 3m), c2, DeviceName
+    | where cnt > 5
+    ```
+    
+1. 残りのオプションはデフォルトのままにします。「次：インシデントの設定>」をクリックします。
+
+1. インシデントの設定タブで、既定値のままにして、「次：自動応答>」をクリックします。
+
+1. 自動応答タブで、「アラートのオートメーション（クラッシック）」で「PostMessageTeams-OnAlert」を選択し、「次：レビュー」をクリックします。
+
+1. 「確認と作成」タブで、設定を確認し「作成」をクリックします。
+   

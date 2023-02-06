@@ -2,208 +2,6 @@
 
 ## ラボ シナリオ
 
-<!-- ![Lab overview.](../Media/SC-200-Lab_Diagrams_Mod7_L1_Ex6.png) -->
-
-あなたは、Microsoft Sentinelを導入した企業で働くセキュリティオペレーションアナリストです。Log AnalyticsのKQLクエリを使用して、そこからカスタム分析ルールを作成し、環境内の脅威や異常な動作を発見するのに役立てようとします。
-
-分析ルールは、環境全体の特定のイベントまたはイベントのセットを検索し、特定のイベントのしきい値または条件に達したときにアラートを表示し、SOC がトリアージおよび調査するためのインシデントを生成し、自動化された追跡および修復プロセスで脅威に対応します。
-
-<!--
-### タスク 1: Sysmon による攻撃 1 の検出
-
-このタスクでは、セキュリティ イベント コネクタと Sysmon がインストールされているホストで**攻撃 1** の検出を作成します。
-
-1. 管理者として WIN1 仮想マシンにログインします。パスワードは**Pa55w.rd** です。  
-
-2. Microsoft Edge ブラウザーで Azure portal (https://portal.azure.com) に移動します。
-
-3. **サインイン**ダイアログ ボックスで、ラボのホスティングプロバイダーから提供された管理者用の**テナント電子メール**アカウントをコピーして貼り付け、**次へ**を選択します。
-
-4. **パスワードの入力**ダイアログ ボックスで、ラボ ホスティング プロバイダーから提供された管理者用の**テナントパスワード**をコピーして貼り付け、「**サインイン**」 を選択します。
-
-5. Azure portal の検索バーに「*Sentinel*」と入力してから、「**Microsoft Sentinel**」を選択します。
-
-6. 先ほど作成した Azure Sentinel ワークスペースを選択します。
-
-7. 全般 セクションから**ログ**を選択します。
-
-8. まず、データが保存されている場所を確認する必要があります。攻撃を行ったばかりなので  ログの時間範囲を**過去24時間**に設定します。
-
-9. 次のKQLステートメントを実行します
-
-```KQL
-search "temp\\startup.bat"
-```
-
-10. 結果は、3つの異なるテーブルについて示しています。
-- DeviceProcessEvents
-- DeviceRegistryEvents
-- Event
-
-    **Device** テーブルは、Defender for Endpoint コネクタに由来します。**Event** テーブルのデータは、エージェント構成を通して接続された Sysmon/Operational Windows Event Logs から入力されます。
-
-    Sysmon と Defender for Endpoint の 2 つの異なるソースからデータを受信しているため、後で結合できる 2 つの KQL ステートメントを作成する必要があります。最初の調査では、それぞれを個別に確認していきます。
-
-  > **注:** まれに、データの読み込みプロセスの読み込みに通常よりも時間がかかる場合があります。その場合、テーブルがクエリに数時間表示されないことがあります。**Event** テーブルが表示された場合のみ、続行できます。
-
-11. 最初のデータソースは、WindowsホストからのSysmonです。以下のKQLステートメントを実行します。
-
-```KQL
-search in (Event) "temp\\startup.bat"
-```
-結果は、イベントテーブルに対してのみ表示されるようになりました。  
-
-12. 行を展開して、レコードに関連するすべての列を表示します。  EventDataやParameterXmlなどのいくつかのフィールドには、構造化データとして保存された複数のデータ項目があります。これにより、特定のフィールドでのクエリが困難になります。  
-
-13. 次に、各行のデータを解析するKQLステートメントを作成して、意味のあるフィールドを作成する必要があります。GitHubのAzureSentinelコミュニティでは、ParsersフォルダーにParsersの例が多数あります。ブラウザーで新しいタブを開き、以下に移動します。**https://github.com/Azure/Azure-Sentinel**
-
-14. **Parsers**フォルダーを選択し、次に**Sysmon**フォルダーを選択します。
-
-15. Sysmon-v12.0.txtファイルを選択し確認します。
-
-ファイルの先頭に、Eventテーブルをクエリし、EventDataという名前の変数に格納するLetステートメントが表示されます。
-> **ヒント:** 次のコード スニペットは、手順 16 のクエリを理解しやすくすることを目的としています。コピーしたり、実行したりしないでください。
-
-```
-let EventData = Event
-| where Source == "Microsoft-Windows-Sysmon"
-| extend RenderedDescription = tostring(split(RenderedDescription, ":")[0])
-| project TimeGenerated, Source, EventID, Computer, UserName, EventData, RenderedDescription
-| extend EvData = parse_xml(EventData)
-| extend EventDetail = EvData.DataItem.EventData.Data
-| project-away EventData, EvData  ;
-```
-
-ファイルのさらに下に、EventID == 13を調べ、EventData変数を入力として使用している別のletステートメントがあります。  
-**ヒント:** 次のコード スニペットは、手順 16 のクエリを理解しやすくすることを目的としています。コピーしたり、実行したりしないでください。
-
-```
-let SYSMON_REG_SETVALUE_13=()
-{
-    let processEvents = EventData
-    | where EventID == 13
-    | extend RuleName = EventDetail.[0].["#text"], EventType = EventDetail.[1].["#text"], UtcTime = EventDetail.[2].["#text"], ProcessGuid = EventDetail.[3].["#text"], 
-    ProcessId = EventDetail.[4].["#text"], Image = EventDetail.[5].["#text"], TargetObject = EventDetail.[6].["#text"], Details = EventDetail.[7].["#text"]
-    | project-away EventDetail  ;
-    processEvents;
-    
-};
-```
-これは良いスタートのように見えます。
-
-16. 上の 2 つのステートメントにより、Event テーブル内の Sysmon を使用して、すべての Registry Key Set Value 行を表示するための独自の KQL ステートメントを作成します。次の KQL クエリを実行します。
-
-**重要:** エラーを防止するため、最初に KQL クエリを*メモ帳*に貼り付けてから、*新しいクエリ 1* のログ ウィンドウにコピーしてください。
-
-```KQL
-Event
-| where Source == "Microsoft-Windows-Sysmon"
-| where EventID == 13
-| extend RenderedDescription = tostring(split(RenderedDescription, ":")[0])
-| project TimeGenerated, Source, EventID, Computer, UserName, EventData, RenderedDescription
-| extend EvData = parse_xml(EventData)
-| extend EventDetail = EvData.DataItem.EventData.Data
-| project-away EventData, EvData  
-| extend RuleName = EventDetail.[0].["#text"], EventType = EventDetail.[1].["#text"], UtcTime = EventDetail.[2].["#text"], ProcessGuid = EventDetail.[3].["#text"], 
-    ProcessId = EventDetail.[4].["#text"], Image = EventDetail.[5].["#text"], TargetObject = EventDetail.[6].["#text"], Details = EventDetail.[7].["#text"]
-    | project-away EventDetail 
-```
-
-   ![スクリーンショット](../Media/SC200_sysmon_query1.png)
-
-17. ここから引き続き検出ルールを作成できますが、このKQLステートメントは、他の検出ルールのKQLステートメントで再利用できるように見えます。  「ログ」ウィンドウで、「**保存**」、「**関数として保存**」の順に選択します。「保存」 フライアウトで、次のように入力して関数を保存します。
- 
-|設定|値|
-|:----|:----|
-|関数名|Event_Reg_SetValue|
-|カテゴリ|Sysmon|
-
-18. 「**保存**」を選択し、「+」記号を選択して、新しいログ クエリ タブを開きます。次に、以下の KQL ステートメントを実行します。
-
-```KQL
-Event_Reg_SetValue
-```
-現在のデータ収集によっては、多くの行を受け取る可能性があります。  これは予測されていることです。  次のタスクは、特定のシナリオにフィルターをかけることです
-
-19. 以下の　KQL　ステートメントを実行します。
-
-```KQL
-Event_Reg_SetValue | search "startup.bat"
-```
-これにより、特定のレコードが返され、データを確認して、行を識別するために何を変更できるかを確認できます
-
-20. 脅威インテリジェンスから、脅威アクターがreg.exeを使用してレジストリキーを追加していることがわかります。ディレクトリは c:\temp です。startup.bat は別の名前にすることができます。次のスクリプトを実行します。
-
-```KQL
-Event_Reg_SetValue 
-| where Image contains "reg.exe"
-
-```
-これは良いスタートです  次に、c:\temp ディレクトリの結果のみを返す必要があります。
-
-21. 続いて、以下のKQLステートメントを実行します:
-
-```KQL
-Event_Reg_SetValue 
-| where Image contains "reg.exe"
-| where Details startswith "C:\\TEMP"
-```
-
-これは良い検出ルールのように見えます。  
-
-22. アラートについてできるだけ多くのコンテキストを提供することにより、セキュリティ運用アナリストを支援することが重要です。これには、調査グラフで使用するエンティティの投影が含まれます。次のクエリを実行します。
-
-```KQL
-Event_Reg_SetValue 
-| where Image contains "reg.exe"
-| where Details startswith "C:\\TEMP"
-| extend timestamp = TimeGenerated, HostCustomEntity = Computer, AccountCustomEntity = UserName
-```
-
-23. 適切な検出ルールができたので、クエリのあるログウィンドウで、コマンド バーの 「**新しいアラート ルール**」 を選択し、「**Azure Sentinel アラートの作成**」 を選択します。
-
-24. これにより、分析ルール ウィザードが起動します。全般タブに次のように入力します
-
-|設定|値|
-|:----|:----|
-|名前 |Sysmon Startup RegKey|
-|説明 |Sysmon Startup Regkey in c:\temp|
-|戦術 |Persistence|
-|重大度 |高|
-
-「**次: ルール ロジックの設定 >**」を選択します。
-
-25. 「**ルール ロジックの設定**」 タブで、**ルール クエリ** が既に入力されているはずです。さらに「アラートエンリッチメント」セクションの **エンティティマッピング** を確認し、エンティティが既に入力されている必要があります。
-
-26. **クエリのスケジューリング設定** で、次のように設定します。
-
-|設定|値|
-|:----|:----|
-|クエリの実行間隔 |5 分|
-|次の時間分の過去のデータを参照します |1 日|
-
-> **注:** 同じデータに対して意図的に多くのインシデントを生成しています。これにより、ラボはこれらのアラートを使用できるようになります。この構成変更を行うと、受信するアラートの数が変化する場合があります。
-
-27. 残りのオプションは既定値のままにします。「**次: インシデント設定 >**」ボタンを選択します。
-
-28. **インシデントの設定 (プレビュー)** タブで、これらの構成が次のように設定されていることを確認します。 
-
-|設定|値|
-|:----|:----|
-|インシデントの設定 |有効|
-|アラートのグループ化 |無効|
-
-「**次: 自動応答 >**」ボタンを選択します。
-
-29. 自動応答タブで次のように設定します。
-
-- **PostMessageTeams-OnAlert** を選択します。
-
-30. 「**次: レビュー**」ボタンを選択します。
-
-31. **確認と作成** タブで、**作成**を選択します。
--->
-
 ### タスク 1: Defender for Endpoint による攻撃1の検出
 
 このタスクでは、Microsoft Defender for Endpoint が構成されたホストで**攻撃 1** の検出を作成します。
@@ -213,7 +11,7 @@ Event_Reg_SetValue
 2. 以下の　KQL　ステートメントを実行します。
 
 ```KQL
-search
+search "temp\\startup.bat"
 ```
 
 3. 以下の　KQL　ステートメントを実行します。これは Defender for Endpoint からのデータに焦点を当てています。
@@ -361,7 +159,7 @@ SecurityEvent
 
 8. 「**次: ルール ロジックを設定　>**」ボタンを選択します。
 
-9. ルールロジックの設定タブで、**ルールのクエリ** と ++エンティティマッピング** のエンティティが既に入力されている必要があります。
+9. ルールロジックの設定タブで、**ルールのクエリ** と **エンティティマッピング** のエンティティが既に入力されている必要があります。
 
 10. **クエリのスケジューリング設定** で、次のように設定します。
 
