@@ -21,9 +21,9 @@
 
 4. クエリエディタで、次のクエリを入力し、「**実行**」ボタンを選択します。  下部のウィンドウにクエリ結果が表示されます。
 
-```KQL
-SecurityEvent
-```
+    ```KQL
+    SecurityEvent
+    ```
 
 5. 最初のレコードの横にある「**>**」を選択して、行の情報を展開します。
 
@@ -35,116 +35,119 @@ SecurityEvent
 
 1. 次の文は、テーブル内のすべてのカラムで値を検索する検索演算子を示しています。クエリ ウィンドウで次のステートメントを入力し、「**実行**」を選択します。
 
-```KQL
-search "err"
-```
+    ```KQL
+    search "err"
+    ```
 
 1. 次の文は、**in** 内にリストされたテーブル間の検索を示しています。クエリ ウィンドウで次のステートメントを入力し、「**実行**」を選択します。
 
-```KQL
-search in (SecurityEvent,SecurityAlert,A*) "err"
-```
+    ```KQL
+    search in (SecurityEvent,SecurityAlert,A*) "err"
+    ```
+
 1. クエリ ウィンドウで 「**時間の範囲**」 を 「**過去 24 時間**」 に戻します。
 
 1. 次の文は、特定の述語をフィルタリングする **where** 演算子を示しています。クエリ ウィンドウで次のステートメントを入力し、「**実行**」を選択します。
 
-```KQL
-SecurityEvent  
-| where TimeGenerated > ago(1h)
-```
+    ```KQL
+    SecurityEvent  
+    | where TimeGenerated > ago(1h)
+    ```
 
-```KQL
-SecurityEvent  
-| where TimeGenerated > ago(1h) and EventID == "4624"
-```
+    ```KQL
+    SecurityEvent  
+    | where TimeGenerated > ago(1h) and EventID == "4624"
+    ```
 
-```KQL
-SecurityEvent  
-| where TimeGenerated > ago(1h)
-| where EventID == 4624
-| where AccountType =~ "user"
-```
+    ```KQL
+    SecurityEvent  
+    | where TimeGenerated > ago(1h)
+    | where EventID == 4624
+    | where AccountType =~ "user"
+    ```
 
-```KQL
-SecurityEvent  
-| where TimeGenerated > ago(1h) and EventID in (4624, 4625)
-```
+    ```KQL
+    SecurityEvent  
+    | where TimeGenerated > ago(1h) and EventID in (4624, 4625)
+ 
+    ```
 
 1. 次の文は、**let** 文を使用して変数を宣言する方法を示しています。クエリ ウィンドウで次のステートメントを入力し、「**実行**」を選択します。
 
-```KQL
-let timeOffset = 1h;
-let discardEventId = 4688;
-SecurityEvent
-| where TimeGenerated > ago(timeOffset*2) and TimeGenerated < ago(timeOffset)
-| where EventID != discardEventId
-```
+    ```KQL
+    let timeOffset = 1h;
+    let discardEventId = 4688;
+    SecurityEvent
+    | where TimeGenerated > ago(timeOffset*2) and TimeGenerated < ago(timeOffset)
+    | where EventID != discardEventId
+    ```
 
 1. 次の文は、**let** 文を使用して動的リストを宣言する方法を示しています。クエリ ウィンドウで次のステートメントを入力し、「**実行**」を選択します。
 
-```KQL
-let suspiciousAccounts = datatable(account: string) [
-  @"\administrator", 
-  @"NT AUTHORITY\SYSTEM"
-];
-SecurityEvent  
-| where TimeGenerated > ago(1h)
-| where Account in (suspiciousAccounts)
-```
- > ヒント：クエリの書式を簡単に再設定するには、「**クエリ**」 ウィンドウのメニューから「**クエリの形式設定**」を選択します。
+    ```KQL
+    let suspiciousAccounts = datatable(account: string) [
+      @"\administrator", 
+      @"NT AUTHORITY\SYSTEM"
+    ];
+    SecurityEvent  
+    | where TimeGenerated > ago(1h)
+    | where Account in (suspiciousAccounts)
+    ```
+
+    > ヒント：クエリの書式を簡単に再設定するには、「**クエリ**」 ウィンドウのメニューから「**クエリの形式設定**」を選択します。
 
 1. 次の文は、**let** 文を使用して動的テーブルを宣言する方法を示しています。クエリ ウィンドウで次のステートメントを入力し、「**実行**」を選択します。
 
-```KQL
-let LowActivityAccounts =
-    SecurityEvent 
-    | summarize cnt = count() by Account 
-    | where cnt < 1000;
-LowActivityAccounts | where Account contains "sql"
-```
+    ```KQL
+    let LowActivityAccounts =
+        SecurityEvent 
+        | summarize cnt = count() by Account 
+        | where cnt < 1000;
+    LowActivityAccounts | where Account contains "sql"
 
 1. クエリ ウィンドウで 「**時間の範囲**」 を 「**過去 30分**」に変更します。これにより、次のステートメントの結果が制限されます。
 
 1. 次の文は、計算カラムを作成して結果セットに追加する **extend** 演算子を示しています。クエリ ウィンドウで次のステートメントを入力し、「**実行**」を選択します。
 
-```KQL
-SecurityEvent  
-| where TimeGenerated > ago(1h)
-| where ProcessName != "" and Process != ""
-| extend StartDir =  substring(ProcessName,0, string_size(ProcessName)-string_size(Process))
-```
+    ```KQL
+    SecurityEvent  
+    | where TimeGenerated > ago(1h)
+    | where ProcessName != "" and Process != ""
+    | extend StartDir =  substring(ProcessName,0, string_size(ProcessName)-string_size(Process))
+    ```
 
 1. 次の文は、入力テーブルのローを 1 つ以上のカラムで昇順または降順でソートする **order by** 演算子を示しています。**order by** 演算子は、並べ替え演算子のエイリアスです。クエリ ウィンドウで次のステートメントを入力し、「**実行**」を選択します。
 
-```KQL
-SecurityEvent  
-| where TimeGenerated > ago(1h)
-| where ProcessName != "" and Process != ""
-| extend StartDir =  substring(ProcessName,0, string_size(ProcessName)-string_size(Process))
-| order by StartDir desc, Process asc
+    ```KQL
+    SecurityEvent  
+    | where TimeGenerated > ago(1h)
+    | where ProcessName != "" and Process != ""
+    | extend StartDir =  substring(ProcessName,0, string_size(ProcessName)-string_size(Process))
+    | order by StartDir desc, Process asc
+    ``` by StartDir desc, Process asc
 ```
 
 1. 次のステートメントは、指定した順序で含める列を選択する **project** 演算子を示しています。クエリ ウィンドウで次のステートメントを入力し、「**実行**」を選択します。
 
-```KQL
-SecurityEvent  
-| where TimeGenerated > ago(1h)
-| where ProcessName != "" and Process != ""
-| extend StartDir =  substring(ProcessName,0, string_size(ProcessName)-string_size(Process))
-| order by StartDir desc, Process asc
-| project Process, StartDir
-```
+    ```KQL
+    SecurityEvent  
+    | where TimeGenerated > ago(1h)
+    | where ProcessName != "" and Process != ""
+    | extend StartDir =  substring(ProcessName,0, string_size(ProcessName)-string_size(Process))
+    | order by StartDir desc, Process asc
+    | project Process, StartDir
+    ```
 
 1. 次のステートメントは、出力から除外する列を選択する project-away 演算子を示しています。クエリ ウィンドウで次のステートメントを入力し、「**実行**」を選択します。
 
-```KQL
-SecurityEvent  
-| where TimeGenerated > ago(1h)
-| where ProcessName != "" and Process != ""
-| extend StartDir =  substring(ProcessName,0, string_size(ProcessName)-string_size(Process))
-| order by StartDir desc, Process asc
-| project-away ProcessName
-```
+    ```KQL
+    SecurityEvent  
+    | where TimeGenerated > ago(1h)
+    | where ProcessName != "" and Process != ""
+    | extend StartDir =  substring(ProcessName,0, string_size(ProcessName)-string_size(Process))
+    | order by StartDir desc, Process asc
+    | project-away ProcessName
+    ```
 
 ### タスク 3: Summarize 演算子を使用してKQLで結果を分析する
 
@@ -152,55 +155,55 @@ SecurityEvent
 
 1. 次の文は、グループの数を返す **count()** 関数を示しています。クエリ ウィンドウで次のステートメントを入力し、「**実行**」を選択します。
 
-```KQL
-SecurityEvent  
-| where TimeGenerated > ago(1h) and EventID == '4688'  
-| summarize count() by Process, Computer
-```
+    ```KQL
+    SecurityEvent  
+    | where TimeGenerated > ago(1h) and EventID == '4688'  
+    | summarize count() by Process, Computer
+    ```
 
 1. 次のステートメントは **count()** 関数を示していますが、この例では、カラムに *cnt* という名前を付けています。クエリ ウィンドウで次のステートメントを入力し、「**実行**」を選択します。
 
-```KQL
-SecurityEvent  
-| where TimeGenerated > ago(1h) and EventID == '4624'  
-| summarize cnt=count() by AccountType, Computer
-```
+    ```KQL
+    SecurityEvent  
+    | where TimeGenerated > ago(1h) and EventID == '4624'  
+    | summarize cnt=count() by AccountType, Computer
+    ```
 
 1. 次の文は、グループ要素のおおよその個別カウントを返す **dcount()** 関数を示しています。クエリ ウィンドウで次のステートメントを入力し、「**実行**」を選択します。
 
-```KQL
-SecurityEvent  
-| where TimeGenerated > ago(1h)
-| summarize dcount(IpAddress)
-```
+    ```KQL
+    SecurityEvent  
+    | where TimeGenerated > ago(1h)
+    | summarize dcount(IpAddress)
+    ```
 
 1. 次のステートメントは、同じアカウントの複数のアプリケーション間で無効なパスワードの失敗を検出するルールです。クエリ ウィンドウで次のステートメントを入力し、「**実行**」を選択します。
 
-```KQL
-let timeframe = 30d;
-let threshold = 1;
-SigninLogs
-| where TimeGenerated >= ago(timeframe)
-| where ResultDescription has "Invalid password"
-| summarize applicationCount = dcount(AppDisplayName) by UserPrincipalName, IPAddress
-| where applicationCount >= threshold
-```
+    ```KQL
+    let timeframe = 30d;
+    let threshold = 1;
+    SigninLogs
+    | where TimeGenerated >= ago(timeframe)
+    | where ResultDescription has "Invalid password"
+    | summarize applicationCount = dcount(AppDisplayName) by UserPrincipalName, IPAddress
+    | where applicationCount >= threshold
+    ```
 
 1. 次の文は、引数が最大化されたときに 10 以上の式を返す **arg_max()** 関数を示しています。次の文は、コンピュータ SQL<>.NA.contosohotels.com のセキュリティイベント テーブルから最新の行を返します。**arg_max 関数**の * は、行のすべての列を要求します。クエリ ウィンドウで次のステートメントを入力し、「**実行**」を選択します。
 
-```KQL
-SecurityEvent  
-| where Computer == "SQL10.na.contosohotels.com"
-| summarize arg_max(TimeGenerated,*) by Computer
-```
+    ```KQL
+    SecurityEvent  
+    | where Computer == "SQL10.na.contosohotels.com"
+    | summarize arg_max(TimeGenerated,*) by Computer
+    ```
 
 1. 次の文は、引数が最小化されたときに 10 以上の式を返す **arg_min()** 関数を示しています。このステートメントでは、コンピューター SQL<>.NA.contosohotels.com の最も古い SecurityEvent が結果セットとして返されます。クエリ ウィンドウで次のステートメントを入力し、 「**実行**」を選択します。
 
-```KQL
-SecurityEvent  
-| where Computer == "SQL10.na.contosohotels.com"
-| summarize arg_min(TimeGenerated,*) by Computer
-```
+    ```KQL
+    SecurityEvent  
+    | where Computer == "SQL10.na.contosohotels.com"
+    | summarize arg_min(TimeGenerated,*) by Computer
+    ```
 
 1. 次のステートメントは、パイプの順序に基づいて結果を理解することの重要性を示しています。「クエリ」 ウィンドウで次のクエリを入力し、各クエリを個別に実行します。
 
