@@ -33,385 +33,379 @@ SecurityEvent
 
 > **重要:**  各手順で、クエリ ウィンドウから前のステートメントをクリアするか、最後に開いたタブ (最大 25) の後の「**+**」を選択して新しいクエリ ウィンドウを開きます。
 
-1. 次のステートメントは、letステートメントを使用して変数をデモンストレーションする方法を示しています。クエリ ウィンドウ内次のステートメントを入力し、「**実行**」を選択します。 
-
-```KQL
-let timeOffset = 7d;
-let discardEventId = 4688;
-SecurityEvent
-| where TimeGenerated > ago(timeOffset*2) and TimeGenerated < ago(timeOffset)
-| where EventID != discardEventId
-```
-
-2. 次のステートメントは、letステートメントを使用して動的リストを宣言する方法を示しています。クエリウィンドウで、次のステートメントを入力し、「**実行**」を選択します。 
-
-```KQL
-let suspiciousAccounts = datatable(account: string) [
-    @"\administrator", 
-    @"NT AUTHORITY\SYSTEM"
-];
-SecurityEvent | where Account in (suspiciousAccounts)
-```
-
-3. 次のステートメントは、"let" ステートメントを使用して動的リストを宣言する方法を示しています。クエリ ウィンドウ内次のステートメントを入力し、「**実行**」を選択します。 
-
-```KQL
-let LowActivityAccounts =
-    SecurityEvent 
-    | summarize cnt = count() by Account 
-    | where cnt < 10;
-LowActivityAccounts | where Account contains "sql"
-```
-
-4. 次のステートメントは、クエリウィンドウに表示されるクエリ時間範囲内のレコードをすべてのテーブルと列で検索する方法を示しています。このスクリプトを実行する前に、クエリウィンドウで、「**時間範囲**」を「最後の時間」に変更します。次のステートメントを入力し、「**実行**」を選択します。 
+1. 次の文は、テーブル内のすべてのカラムで値を検索する検索演算子を示しています。クエリ ウィンドウで次のステートメントを入力し、「**実行**」を選択します。
 
 ```KQL
 search "err"
 ```
 
-> **警告:** 次のスクリプトのために、必ず時間範囲を「過去24時間」に戻してください。
-
-5. 次のステートメントは、「in」句でリストされたテーブル全体で、クエリウィンドウに表示されるクエリ時間範囲内のレコードを検索する方法を示しています。クエリ ウィンドウ内次のステートメントを入力し、「**実行**」を選択します。 
+1. 次の文は、**in** 内にリストされたテーブル間の検索を示しています。クエリ ウィンドウで次のステートメントを入力し、「**実行**」を選択します。
 
 ```KQL
 search in (SecurityEvent,SecurityAlert,A*) "err"
 ```
+1. クエリ ウィンドウで 「**時間の範囲**」 を 「**過去 24 時間**」 に戻します。
 
-6. 次のステートメントは、where演算子を使用したフィルターを示しています。クエリ ウィンドウ内次のステートメントを入力し、「**実行**」を選択します。 
-
-> **注:** 以下の各コードブロックからクエリを入力した後、「実行」する必要があります。
+1. 次の文は、特定の述語をフィルタリングする **where** 演算子を示しています。クエリ ウィンドウで次のステートメントを入力し、「**実行**」を選択します。
 
 ```KQL
-SecurityEvent
-| where TimeGenerated > ago(1d)
+SecurityEvent  
+| where TimeGenerated > ago(1h)
 ```
 
 ```KQL
-SecurityEvent
+SecurityEvent  
 | where TimeGenerated > ago(1h) and EventID == "4624"
 ```
 
 ```KQL
-SecurityEvent
+SecurityEvent  
 | where TimeGenerated > ago(1h)
 | where EventID == 4624
 | where AccountType =~ "user"
 ```
 
 ```KQL
-SecurityEvent | where EventID in (4624, 4625)
+SecurityEvent  
+| where TimeGenerated > ago(1h) and EventID in (4624, 4625)
 ```
 
-7. 次のステートメントは、クエリウィンドウでextend演算子を使用してフィールドを作成する方法を示しています。次のステートメントを入力し、「**実行**」を選択します。 
+1. 次の文は、**let** 文を使用して変数を宣言する方法を示しています。クエリ ウィンドウで次のステートメントを入力し、「**実行**」を選択します。
 
 ```KQL
-SecurityAlert
-| where TimeGenerated > ago(7d)
-| extend severityOrder = case (
-    AlertSeverity == "High", 3,
-    AlertSeverity == "Medium", 2, 
-    AlertSeverity == "Low", 1,
-    AlertSeverity == "Informational", 0,
-    -1)
-```
-
-8. 次のステートメントは、orderby演算子を使用した結果の並べ替えを示しています。クエリ ウィンドウ内次のステートメントを入力し、「**実行**」を選択します。 
-
-```KQL
-SecurityAlert
-| where TimeGenerated > ago(7d)
-| extend severityOrder = case (
-    AlertSeverity == "High", 3,
-    AlertSeverity == "Medium", 2, 
-    AlertSeverity == "Low", 1,
-    AlertSeverity == "Informational", 0,
-    -1)
-| order by severityOrder desc
-```
-
-9. 次のステートメントは、プロジェクト演算子を使用して結果セットのフィールドを指定する方法を示しています。
-
-> **注:** 以下の各コードブロックからクエリを入力した後、"実行" する必要があります。
-
-クエリ ウィンドウ内次のステートメントを入力し、「**実行**」を選択します。 
-
-```KQL
+let timeOffset = 1h;
+let discardEventId = 4688;
 SecurityEvent
-| project Computer, Account
+| where TimeGenerated > ago(timeOffset*2) and TimeGenerated < ago(timeOffset)
+| where EventID != discardEventId
 ```
 
+1. 次の文は、**let** 文を使用して動的リストを宣言する方法を示しています。クエリ ウィンドウで次のステートメントを入力し、「**実行**」を選択します。
+
 ```KQL
-SecurityAlert
-| where TimeGenerated > ago(7d)
-| extend severityOrder = case (
-    AlertSeverity == "High", 3,
-    AlertSeverity == "Medium", 2, 
-    AlertSeverity == "Low", 1,
-    AlertSeverity == "Informational", 0,
-    -1)
-| order by severityOrder
-| project-away severityOrder
+let suspiciousAccounts = datatable(account: string) [
+  @"\administrator", 
+  @"NT AUTHORITY\SYSTEM"
+];
+SecurityEvent  
+| where TimeGenerated > ago(1h)
+| where Account in (suspiciousAccounts)
+```
+ > ヒント：クエリの書式を簡単に再設定するには、「**クエリ**」 ウィンドウのメニューから「**クエリの形式設定**」を選択します。
+
+1. 次の文は、**let** 文を使用して動的テーブルを宣言する方法を示しています。クエリ ウィンドウで次のステートメントを入力し、「**実行**」を選択します。
+
+```KQL
+let LowActivityAccounts =
+    SecurityEvent 
+    | summarize cnt = count() by Account 
+    | where cnt < 1000;
+LowActivityAccounts | where Account contains "sql"
 ```
 
-### タスク 3: Summarize演算子を使用してKQLで結果を分析する
+1. クエリ ウィンドウで 「**時間の範囲**」 を 「**過去 30分**」に変更します。これにより、次のステートメントの結果が制限されます。
 
-このタスクでは、データを準備するためのKQLステートメントを作成します
-
-1. 次のステートメントは、count関数を示しています。クエリ ウィンドウ内次のステートメントを入力し、「**実行**」を選択します。 
+1. 次の文は、計算カラムを作成して結果セットに追加する **extend** 演算子を示しています。クエリ ウィンドウで次のステートメントを入力し、「**実行**」を選択します。
 
 ```KQL
-SecurityEvent
-| where EventID == "4688"
+SecurityEvent  
+| where TimeGenerated > ago(1h)
+| where ProcessName != "" and Process != ""
+| extend StartDir =  substring(ProcessName,0, string_size(ProcessName)-string_size(Process))
+```
+
+1. 次の文は、入力テーブルのローを 1 つ以上のカラムで昇順または降順でソートする **order by** 演算子を示しています。**order by** 演算子は、並べ替え演算子のエイリアスです。クエリ ウィンドウで次のステートメントを入力し、「**実行**」を選択します。
+
+```KQL
+SecurityEvent  
+| where TimeGenerated > ago(1h)
+| where ProcessName != "" and Process != ""
+| extend StartDir =  substring(ProcessName,0, string_size(ProcessName)-string_size(Process))
+| order by StartDir desc, Process asc
+```
+
+1. 次のステートメントは、指定した順序で含める列を選択する **project** 演算子を示しています。クエリ ウィンドウで次のステートメントを入力し、「**実行**」を選択します。
+
+```KQL
+SecurityEvent  
+| where TimeGenerated > ago(1h)
+| where ProcessName != "" and Process != ""
+| extend StartDir =  substring(ProcessName,0, string_size(ProcessName)-string_size(Process))
+| order by StartDir desc, Process asc
+| project Process, StartDir
+```
+
+1. 次のステートメントは、出力から除外する列を選択する project-away 演算子を示しています。クエリ ウィンドウで次のステートメントを入力し、「**実行**」を選択します。
+
+```KQL
+SecurityEvent  
+| where TimeGenerated > ago(1h)
+| where ProcessName != "" and Process != ""
+| extend StartDir =  substring(ProcessName,0, string_size(ProcessName)-string_size(Process))
+| order by StartDir desc, Process asc
+| project-away ProcessName
+```
+
+### タスク 3: Summarize 演算子を使用してKQLで結果を分析する
+
+このタスクでは、データを集計する KQL ステートメントを作成します。集計では、グループ別の列に従って行がグループ化され、各グループの集計が計算されます。
+
+1. 次の文は、グループの数を返す **count()** 関数を示しています。クエリ ウィンドウで次のステートメントを入力し、「**実行**」を選択します。
+
+```KQL
+SecurityEvent  
+| where TimeGenerated > ago(1h) and EventID == '4688'  
 | summarize count() by Process, Computer
 ```
 
-2. 次のステートメントは、count関数を示しています。クエリ ウィンドウ内次のステートメントを入力し、「**実行**」を選択します。 
+1. 次のステートメントは **count()** 関数を示していますが、この例では、カラムに *cnt* という名前を付けています。クエリ ウィンドウで次のステートメントを入力し、「**実行**」を選択します。
 
 ```KQL
-SecurityEvent
-| where TimeGenerated > ago(1h)
-| where EventID == 4624
+SecurityEvent  
+| where TimeGenerated > ago(1h) and EventID == '4624'  
 | summarize cnt=count() by AccountType, Computer
 ```
 
-3. 次のステートメントは、dcount関数を示しています。クエリ ウィンドウ内次のステートメントを入力し、「**実行**」を選択します。 
+1. 次の文は、グループ要素のおおよその個別カウントを返す **dcount()** 関数を示しています。クエリ ウィンドウで次のステートメントを入力し、「**実行**」を選択します。
 
 ```KQL
-SecurityEvent
+SecurityEvent  
+| where TimeGenerated > ago(1h)
 | summarize dcount(IpAddress)
 ```
 
-4. 次のステートメントは、arg_max 関数を示しています。
-
-次のステートメントはSQL12.NA.contosohotels.com コンピューターの SecurityEvent テーブルから最新の行を返します。  arg_max 関数の*でその行のすべての列を要求します。クエリ ウィンドウ内次のステートメントを入力し、「**実行**」を選択します。 
+1. 次のステートメントは、同じアカウントの複数のアプリケーション間で無効なパスワードの失敗を検出するルールです。クエリ ウィンドウで次のステートメントを入力し、「**実行**」を選択します。
 
 ```KQL
-SecurityEvent 
-| where Computer == "SQL12.na.contosohotels.com"
+let timeframe = 30d;
+let threshold = 1;
+SigninLogs
+| where TimeGenerated >= ago(timeframe)
+| where ResultDescription has "Invalid password"
+| summarize applicationCount = dcount(AppDisplayName) by UserPrincipalName, IPAddress
+| where applicationCount >= threshold
+```
+
+1. 次の文は、引数が最大化されたときに 10 以上の式を返す **arg_max()** 関数を示しています。次の文は、コンピュータ SQL<>.NA.contosohotels.com のセキュリティイベント テーブルから最新の行を返します。**arg_max 関数**の * は、行のすべての列を要求します。クエリ ウィンドウで次のステートメントを入力し、「**実行**」を選択します。
+
+```KQL
+SecurityEvent  
+| where Computer == "SQL10.na.contosohotels.com"
 | summarize arg_max(TimeGenerated,*) by Computer
 ```
 
-5. 次のステートメントは、arg_min 関数を示しています。
-
-このステートメントでは、SQL12.NA.contosohotels.com コンピューターの最も古い SecurityEvent を結果セットとして返します。クエリ ウィンドウ内次のステートメントを入力し、「**実行**」を選択します。 
+1. 次の文は、引数が最小化されたときに 10 以上の式を返す **arg_min()** 関数を示しています。このステートメントでは、コンピューター SQL<>.NA.contosohotels.com の最も古い SecurityEvent が結果セットとして返されます。クエリ ウィンドウで次のステートメントを入力し、 「**実行**」を選択します。
 
 ```KQL
-SecurityEvent 
-| where Computer == "SQL12.na.contosohotels.com"
+SecurityEvent  
+| where Computer == "SQL10.na.contosohotels.com"
 | summarize arg_min(TimeGenerated,*) by Computer
 ```
 
-6. 次のステートメントは、パイプの順序に基づいて結果を理解することの重要性を示しています。|"クエリ ウィンドウ内次のクエリを入力し、それぞれを個別に実行します。 
+1. 次のステートメントは、パイプの順序に基づいて結果を理解することの重要性を示しています。「クエリ」 ウィンドウで次のクエリを入力し、各クエリを個別に実行します。
 
-**Query 1** には、最後のアクティビティがログインだった Account が含まれます。まず、SecurityEvent テーブルが集計され、各 Account の最新行を返します。  その後、EventID が 4624 (ログイン) に等しい行だけ返します。
+    1. **クエリ 1** には、最後のアクティビティがログインであったアカウントが含まれます。SecurityEvent テーブルが最初に集計され、各アカウントの最新の行が返されます。その後、イベント ID が 4624 (ログイン) に等しい行のみが返されます。
 
-```KQL
-SecurityEvent
-| summarize arg_max(TimeGenerated, *) by Account
-| where EventID == "4624"
-```
+        ```KQL
+        SecurityEvent  
+        | summarize arg_max(TimeGenerated, *) by Account
+        | where EventID == '4624'  
+        ```
 
-**Query 2** には、ログインしたアカウントの最新のログインが含まれます。 SecurityEvent テーブルは、EventID = 4624 のみを含むようにフィルター処理されます。これらの結果は、Account ごとに最新のログイン行に対して集計されます。
+    1. **クエリ 2** には、ログインしたアカウントの最新のログインが含まれます。セキュリティ イベント テーブルは、イベント ID = 4624 のみを含むようにフィルター処理されます。次に、これらの結果は、アカウントごとに最新のログイン行に集約されます。
 
-```KQL
-SecurityEvent
-| where EventID == "4624"
-| summarize arg_max(TimeGenerated, *) by Account
-```
+        ```KQL
+        SecurityEvent  
+        | where EventID == '4624'  
+        | summarize arg_max(TimeGenerated, *) by Account
+        ```
 
-> **注:**  「完了」バーを選択して、「合計 CPU」と「処理されたクエリに使用されたデータ」を確認することもできます。 バーを開き、両方のステートメント間のデータを比較します。
+    >**ノート:**  また、右下の 「クエリの詳細」 リンクを選択して 「合計 CPU」 と 「処理されたクエリに使用されたデータ」 を確認し、両方のステートメント間でデータを比較することもできます。
 
-7. 次のステートメントは、make_list 関数を示しています。
+2. 次の文は、グループ内のすべての値のリストを返す **make_list()** 関数を示しています。この KQL クエリは、最初に where 演算子を使用してイベント ID をフィルター処理します。各コンピューターの結果はアカウントの JSON 配列です。結果の JSON 配列には、重複するアカウントが含まれます。クエリ ウィンドウで次のステートメントを入力し、「**実行**」を選択します。
 
-make_list 関数では、グループ内の式のすべての値の動的な (JSON) 配列を返します。この KQL クエリでは、まず where 演算子を使用して EventID をフィルター処理します。  次に、各コンピューターについて、結果がアカウントの JSON 配列になります。結果として得られる JSON 配列には、重複するアカウントが含まれます。
+    ```KQL
+    SecurityEvent  
+    | where TimeGenerated > ago(1h)
+    | where EventID == '4624'  
+    | summarize make_list(Account) by Computer
+    ```
 
-クエリ ウィンドウ内次のステートメントを入力し、「**実行**」を選択します。 
+3. 次の文は、グループ内の個別の値のセットを返す **make_set()** 関数を示しています。この KQL クエリは、最初に **where** 演算子を使用してイベント ID をフィルター処理します。各コンピューターの結果は、一意のアカウントの JSON 配列です。クエリ ウィンドウで次のステートメントを入力し、「**実行**」を選択します。
 
-```KQL
-SecurityEvent
-| where EventID == "4624"
-| summarize make_list(Account) by Computer
-```
+    ```KQL
+    SecurityEvent  
+    | where TimeGenerated > ago(1h)
+    | where EventID == '4624'  
+    | summarize make_set(Account) by Computer
+    ```
 
-8. 次のステートメントは、make_set 関数を示しています。
+### タスク 4: レンダー演算子を使用してKQLで視覚化を作成します
 
-make_set　関数は、Expression がグループ内で取る*個別の*値を含む動的 （JSON） 配列を返します。この KQL クエリでは、まず where 演算子を使用して EventID をフィルター処理します。  次に、各 Computer について、結果が一意の Account の JSON 配列になります。クエリ ウィンドウ内次のステートメントを入力し、「**実行**」を選択します。 
+このタスクでは、KQL ステートメントで視覚化を生成するを使用します。
 
-```KQL
-SecurityEvent
-| where EventID == "4624"
-| summarize make_set(Account) by Computer
-```
+1. 次のステートメントは、棒グラフの視覚化を使用して、**render** 演算子 (結果をグラフィカル出力としてレンダリングする) を示しています。クエリ ウィンドウで次のステートメントを入力し、「**実行**」を選択します。
 
-### タスク 4: レンダー演算子を使用してKQLでビジュアライゼーションを作成します
+    ```KQL
+    SecurityEvent  
+    | where TimeGenerated > ago(1h)
+    | summarize count() by Account
+    | render barchart
+    ```
 
-このタスクでは,KQLステートメントを使用した視覚化の生成を使用します
+1. 次の文は、時系列で結果を視覚化する **render** 演算子を示しています。**bin()** 関数は、時間枠内のすべての値を丸めてグループ化し、**summarize** と組み合わせて頻繁に使用されます。値のセットが散在している場合、値は特定の値のより小さなセットにグループ化されます。生成された結果を結合し、タイムチャートを使用してレンダリング演算子にパイプすると、時系列の視覚化が提供されます。クエリ ウィンドウで次のステートメントを入力し、「**実行**」を選択します。
 
-1. 次のステートメントは、棒グラフを使用して結果を視覚化するレンダリング関数を示しています。クエリ ウィンドウ内次のステートメントを入力し、「**実行**」を選択します。 
+    ```KQL
+    SecurityEvent  
+    | where TimeGenerated > ago(1h)
+    | summarize count() by bin(TimeGenerated, 1m)
+    | render timechart
+    ```
 
-```KQL
-SecurityEvent 
-| summarize count() by Account
-| render barchart
-```
+### タスク 5: KQLで複数テーブルステートメントを作成する
 
-2. 次のステートメントは、時系列で結果を視覚化するレンダリング関数を示しています。
+このタスクでは、複数テーブルの KQL ステートメントを作成します。
 
-bin() 関数では、指定のビン サイズの整数の倍数になるように値を切り捨てます。  summarize by ... と組み合わせてよく使用されます。値のセットが分散している場合、その値は特定の値の小さなセットにグループ化されます。  生成された時系列と render 演算子へのパイプを timechart の種類と結合することで、時系列を視覚化できます。クエリ ウィンドウ内次のステートメントを入力し、「**実行**」を選択します。 
+1. クエリ ウィンドウで 「時間の範囲」 を 「過去30分」 に変更します。これにより、次のステートメントの結果が制限されます。
 
-```KQL
-SecurityEvent 
-| summarize count() by bin(TimeGenerated, 1h) 
-| render timechart
-```
+1. 次の文は、2 つ以上のテーブルを受け取り、すべてのローを返す **union** 演算子を示しています。パイプ文字で結果がどのように渡され、影響を受けるかを理解することが不可欠です。「クエリ」 ウィンドウで次のステートメントを入力し、クエリごとに個別に「**実行**」を選択して結果を表示します。
 
-### タスク 5: KQLでマルチテーブルステートメントを作成する
+    1. **クエリ 1** は、SecurityEvent のすべての行と SigninLogs のすべての行を返します。
 
-このタスクでは、マルチテーブルKQLステートメントを作成します。
+        ```KQL
+        SecurityEvent  
+        | union SigninLogs  
+        ```
 
-1. 次のステートメントは、2つ以上のテーブルを取得し、それらすべての行を返すunion演算子を示しています。結果を渡す方法、およびパイプ文字によってどのような影響があるかを理解することは重要です。クエリ ウィンドウ内次のステートメントを入力し、それぞれに対し、「**実行**」を選択して、結果を確認します。 
+    1. **クエリ 2** は、SigninLogs のすべての行と SecurityEvent のすべての行を 1 つの行と列で返します。
 
-**Query 1** で SecurityEvent のすべての行と SecurityAlert のすべての行が返されます
-```KQL
-SecurityEvent 
-| union SecurityAlert  
-```
+        ```KQL
+        SecurityEvent  
+        | union SigninLogs  
+        | summarize count() 
+        ```
 
-**Query 2** で SecurityEvent のすべての行数と SecurityAlert のすべての行数である 1 つの行と列が返されます
-```KQL
-SecurityEvent 
-| union SecurityAlert  
-| summarize count() 
-| project count_
-```
+    1. **クエリ 3** は、SecurityEvent のすべての行と SigninLogs の 1 行 (最後の行）を返します。SigninLogs の最後の行には、行の合計数の集計カウントが含まれます。
 
-**Query 3** で SecurityEvent のすべての行と SecurityAlert のすべての 1 つの行が返されます  SecurityAlert の行は、SecurityAlert の行数です。
-```KQL
-SecurityEvent 
-| union (SecurityAlert  | summarize count()) 
-| project count_
-```
+        ```KQL
+        SecurityEvent  
+        | union (SigninLogs | summarize count() | project count_)
+        ```
 
-2. 次のステートメントは、複数のテーブルを結合するためのワイルドカードのunion演算子のサポートを示しています。クエリ ウィンドウ内次のステートメントを入力し、「**実行**」を選択します。 
+1. 次の文は、ワイルドカードを使用して複数のテーブルを受け取り、全てのデーブルの行を返すための **union** 演算子のサポートを示しています。クエリ ウィンドウで次のステートメントを入力し、「**実行**」を選択します。
 
-```KQL
-union Security* 
-| summarize count() by Type
-```
+    ```KQL
+    union Security*  
+    | summarize count() by Type
+    ```
 
-3. 次のステートメントは、各テーブルから指定された列の値を照合することにより、2つのテーブルの行をマージして新しいテーブルを形成するunion演算子を示しています。クエリ ウィンドウ内次のステートメントを入力し、「**実行**」を選択します。 
+1. 次の文は、2 つのテーブルの行をマージし、各テーブルの指定されたカラムの値を照合して新しいテーブルを形成する **join** 演算子を示しています。クエリ ウィンドウで次のステートメントを入力し、「**実行**」を選択します。
 
-```KQL
-SecurityEvent 
-| where EventID == "4624" 
-| summarize LogOnCount=count() by EventID, Account 
-| project LogOnCount, Account 
-| join kind = inner (
-     SecurityEvent 
-     | where EventID == "4634" 
-     | summarize LogOffCount=count() by EventID, Account 
-     | project LogOffCount, Account 
-) on Account
-```
+    ```KQL
+    SecurityEvent  
+    | where EventID == "4624" 
+    | summarize LogOnCount=count() by EventID, Account
+    | project LogOnCount, Account
+    | join kind = inner( 
+     SecurityEvent  
+    | where EventID == "4634" 
+    | summarize LogOffCount=count() by EventID, Account
+    | project LogOffCount, Account
+    ) on Account
+    ```
 
-結合で指定した最初のテーブルが左テーブルと見なされます。  join キーワードの後のテーブルが右テーブルです。  テーブルの列を操作する場合、$ left.Columnnameと$ right.Column nameは、参照されるテーブルの列を区別するためのものです。 
+    >**重要:** join で指定された最初のテーブルは、左側のテーブルと見なされます。join 演算子の後のテーブルが右側のテーブルです。テーブルの列を操作する場合、$left.Column 名と $right.Column 名は、どのテーブル列が参照されているかを区別するためのものです。join 演算子は、flouter、 inner、 innerunique、 leftanti、 leftantisemi、 leftouter、 leftsemi、 rightanti、 rightantisemi、 rightouter、 rightsemi など、さまざまなタイプをサポートしています。
 
-### タスク 6: KQLで文字列データを操作する
+1. クエリ ウィンドウで「時間の範囲」を「過去 24 時間」に戻します。
 
-このタスクでは、KQLステートメントを使用して構造化および非構造化文字列フィールドを操作します。
 
-1. 次のステートメントは、extract 関数を示しています。  extract では、テキスト文字列から正規表現との一致を抽出します。抽出されたサブ文字列を指定された型に変換するオプションがあります。クエリ ウィンドウ内次のステートメントを入力し、「**実行**」を選択します。 
+### Task 6: KQL で文字列データを操作する
 
-```KQL
-print extract("x=([0-9.]+)", 1, "hello x=45.6|wo") == "45.6"
-```
+このタスクでは、KQL ステートメントを使用して構造化文字列フィールドと非構造化文字列フィールドを操作します。
 
-2. 次のステートメントでは、extract 関数を使用して、SecurityEvent テーブルの Account フィールドから Account Name を取得します。クエリ ウィンドウ内次のステートメントを入力し、「**実行**」を選択します。 
+1. 次の文は、ソース文字列から正規表現の一致を取得する **extract** 関数を示しています。抽出された部分文字列を指定された型に変換するオプションがあります。クエリ ウィンドウで、次のステートメントを入力し、「**実行**」を選択します。
 
-```KQL
-let top3 = SecurityEvent
-| where TimeGenerated > ago(1h)
-| where AccountType == 'User'
-| extend Account_Name = extract(@"^(.*\\)?([^@]*)(@.*)?$", 2, tolower(Account))
-| summarize Attempts = count() by Account_Name
-| where Account_Name != ""
-| top 3 by Attempts 
-| summarize make_list(Account_Name);
-SecurityEvent
-| where TimeGenerated > ago(1h)
-| where AccountType == 'User'
-| extend Name = extract(@"^(.*\\)?([^@]*)(@.*)?$", 2, tolower(Account))
-| extend Account_Name = iff(Name in (top3), Name, "Other")
-| where Account_Name != ""
-| summarize Attempts = count() by Account_Name
-| sort by Attempts
-```
+    ```KQL
+    print extract("x=([0-9.]+)", 1, "hello x=45.6|wo") == "45.6"
+    ```
 
-3. 次のステートメントは、parse 関数を示しています。parse 文字列式が評価され、その値が 1 つまたは複数の計算列に解析されます。解析に失敗した文字列の計算列には null が含まれます。
+1. 次の文は、extract 関数を使用して、SecurityEvent テーブルの **Account** フィールドからアカウント名を取得します。クエリ ウィンドウで次のステートメントを入力し、「**実行**」を選択します。
 
-```KQL
-let Traces = datatable(EventText:string)
-[
-"Event: NotifySliceRelease (resourceName=PipelineScheduler, totalSlices=27, sliceNumber=23, lockTime=02/17/2016 08:40:01, releaseTime=02/17/2016 08:40:01, previousLockTime=02/17/2016 08:39:01)",
-"Event: NotifySliceRelease (resourceName=PipelineScheduler, totalSlices=27, sliceNumber=15, lockTime=02/17/2016 08:40:00, releaseTime=02/17/2016 08:40:00, previousLockTime=02/17/2016 08:39:00)",
-"Event: NotifySliceRelease (resourceName=PipelineScheduler, totalSlices=27, sliceNumber=20, lockTime=02/17/2016 08:40:01, releaseTime=02/17/2016 08:40:01, previousLockTime=02/17/2016 08:39:01)",
-"Event: NotifySliceRelease (resourceName=PipelineScheduler, totalSlices=27, sliceNumber=22, lockTime=02/17/2016 08:41:01, releaseTime=02/17/2016 08:41:00, previousLockTime=02/17/2016 08:40:01)",
-"Event: NotifySliceRelease (resourceName=PipelineScheduler, totalSlices=27, sliceNumber=16, lockTime=02/17/2016 08:41:00, releaseTime=02/17/2016 08:41:00, previousLockTime=02/17/2016 08:40:00)"
-];
-Traces  
-| parse EventText with * "resourceName=" resourceName ", totalSlices=" totalSlices:long * "sliceNumber=" sliceNumber:long * "lockTime=" lockTime ", releaseTime=" releaseTime:date "," * "previousLockTime=" previousLockTime:date ")" *  
-| project resourceName, totalSlices, sliceNumber, lockTime, releaseTime, previousLockTime
-```
+    ```KQL
+    SecurityEvent  
+    | where EventID == '4672' and AccountType == 'User' 
+    | extend Account_Name = extract(@"^(.*\\)?([^@]*)(@.*)?$", 2, tolower(Account))
+    | summarize LoginCount = count() by Account_Name
+    | where Account_Name != ""
+    | where LoginCount < 10
+    ```
 
-4. 次のステートメントは、動的フィールドの操作を示しています
+1. 次の文は、文字列式を評価し、その値を 1 つ以上の計算カラムに解析する **parse** 演算子を示しています。非構造化データの構造化に使用します。クエリ ウィンドウで次のステートメントを入力し、「**実行**」を選択します。
 
-Log Analyticsテーブル内には、動的として定義されたフィールドタイプがあります。動的フィールドには、キーと値のペアが含まれます。
+    ```KQL
+    let Traces = datatable(EventText:string)
+    [
+    "Event: NotifySliceRelease (resourceName=PipelineScheduler, totalSlices=27, sliceNumber=23, lockTime=02/17/2016 08:40:01, releaseTime=02/17/2016 08:40:01, previousLockTime=02/17/2016 08:39:01)",
+    "Event: NotifySliceRelease (resourceName=PipelineScheduler, totalSlices=27, sliceNumber=15, lockTime=02/17/2016 08:40:00, releaseTime=02/17/2016 08:40:00, previousLockTime=02/17/2016 08:39:00)",
+    "Event: NotifySliceRelease (resourceName=PipelineScheduler, totalSlices=27, sliceNumber=20, lockTime=02/17/2016 08:40:01, releaseTime=02/17/2016 08:40:01, previousLockTime=02/17/2016 08:39:01)",
+    "Event: NotifySliceRelease (resourceName=PipelineScheduler, totalSlices=27, sliceNumber=22, lockTime=02/17/2016 08:41:01, releaseTime=02/17/2016 08:41:00, previousLockTime=02/17/2016 08:40:01)",
+    "Event: NotifySliceRelease (resourceName=PipelineScheduler, totalSlices=27, sliceNumber=16, lockTime=02/17/2016 08:41:00, releaseTime=02/17/2016 08:41:00, previousLockTime=02/17/2016 08:40:00)"
+    ];
+    Traces  
+    | parse EventText with * "resourceName=" resourceName ", totalSlices=" totalSlices:long * "sliceNumber=" sliceNumber:long * "lockTime=" lockTime ", releaseTime=" releaseTime:date "," * "previousLockTime=" previousLockTime:date ")" *  
+    | project resourceName, totalSlices, sliceNumber, lockTime, releaseTime, previousLockTime
+    ```
 
-動的フィールド内の文字列にアクセスするには、ドット表記を使用します。AppAvailabilityResults テーブルの Properties フィールドの型は動的です。この例では、Properties.SyntheticMonitorId というフィールド名を使用して SyntheticMonitorId にアクセスできます。
+1. 次の文は、他のデータ型の任意の値を取ることができる特別な**動的**フィールドの使用を示しています。この例では、SigninLogs テーブルの **DeviceDetail** フィールドの種類は**動的**です。クエリ ウィンドウで次のステートメントを入力し、「**実行**」を選択します。
 
-クエリ ウィンドウ内次のステートメントを入力し、**実行します**。 
+    ```KQL
+    SigninLogs | extend OS = DeviceDetail.operatingSystem
+    ```
 
-```KQL
-AppAvailabilityResults
-| project Properties.SyntheticMonitorId
-```
+1. 次の例は、SigninLogs のパッケージされたフィールドを分割する方法を示しています。クエリ ウィンドウで次のステートメントを入力し、「**実行**」を選択します。
 
-5. 次のステートメントは、文字列フィールドに格納されているJSONを操作する関数を示しています。多くのログでは JSON 形式でデータを送信します。そのため、JSON データをクエリ可能なフィールドに変換する方法を知る必要があります。 
+    ```KQL
+    SigninLogs | extend OS = DeviceDetail.operatingSystem, Browser = DeviceDetail.browser
+    | extend CAPol0Name = tostring(ConditionalAccessPolicies[0].displayName), CAPol0Result = tostring(ConditionalAccessPolicies[0].result)
+    | extend CAPol1Name = tostring(ConditionalAccessPolicies[1].displayName), CAPol1Result = tostring(ConditionalAccessPolicies[1].result)
+    | extend CAPol2Name = tostring(ConditionalAccessPolicies[2].displayName), CAPol2Result = tostring(ConditionalAccessPolicies[2].result)
+    | extend StatusCode = tostring(Status.errorCode), StatusDetails = tostring(Status.additionalDetails)
+    | extend Date = startofday(TimeGenerated), City = tostring(LocationDetails.city)
+    | summarize count() by Date, Identity, UserDisplayName, UserPrincipalName, IPAddress, City, ResultType, ResultDescription, StatusCode, StatusDetails, CAPol0Name, CAPol0Result, CAPol1Name, CAPol1Result, CAPol2Name, CAPol2Result
+    | sort by Date
+    ```
 
-クエリ ウィンドウ内次のステートメントをそれぞれ入力し、「**実行**」を選択します。 
+    >**重要:** 動的なフィールドの種類は JSON のように見えますが、JSON に存在しないため、JSON モデルが表現できない値を保持できます。したがって、動的な値を JSON 形式にする場合、JSON で表現できない値は文字列の値になります。 
 
-```KQL
-SecurityAlert
-| extend ExtendedProperties = todynamic(ExtendedProperties) 
-| extend ActionTaken = ExtendedProperties.ActionTaken
-| extend AttackerIP = ExtendedProperties["Attacker IP"]
-```
-mv-expand 演算子が、複数の値のある動的配列またはプロパティ バッグを複数のレコードに展開します。
+1. 次のステートメントは、文字列フィールドに格納されている JSON を操作する演算子を示しています。多くのログは JSON 形式でデータを送信するため、JSON データをクエリ可能なフィールドに変換する方法を知っている必要があります。クエリ ウィンドウで次のステートメントを入力し、 「**実行**」を選択します。
 
-```KQL
-SecurityAlert
-| mv-expand entity = todynamic(Entities)
-```
-mv-apply 演算子が、サブクエリを各レコードに適用してすべてのサブクエリの結果集合体を返します。
+    ```KQL
+    SigninLogs | extend Location =  todynamic(LocationDetails)
+    | extend City =  Location.city
+    | extend City2 = Location["city"]
+    | project Location, City, City2
+    ```
 
-```KQL
-SecurityAlert
-| where TimeGenerated >= ago(7d)
-| mv-apply entity = todynamic(Entities) on 
-( where entity.Type == "account" | extend account = strcat (entity.NTDomain, "\\", entity.Name))
-```
+1. 次の文は、動的配列を行に変換する **mv-expand** 演算子を示しています (複数値展開)。
 
-6. 関数を作成するには：
+    ```KQL
+    SigninLogs | mv-expand Location = todynamic(LocationDetails)
+    ```
 
-> **注:** このラボのデータに使用されるラデモ環境ではこれを行うことはできませんが、これは、環境で使用する重要な概念です。 
+1. 次の文は、各レコードにサブクエリを適用し、すべてのサブクエリの結果の和集合を返す **mv-apply** 演算子を示しています。
 
-クエリを実行した後、「**保存**」ボタンを選択してから、ドロップダウンから、「**Save As function**」 (関数として保存) を選択します。希望の名前を入力します。たとえば、「**関数名**」ボックスに「*MailboxForward*」と入力し、「**凡例カテゴリ**」に「*General*」などを入力して、「**保存**」を選択します。
+    ```KQL
+    SigninLogs  
+    | mv-apply Location = todynamic(LocationDetails) on 
+    ( where Location.countryOrRegion == "ES")
+    ```
 
-この関数は、関数エイリアスを使用して KQL で使用できます。
+2. 関数は、保存された名前をコマンドとして他のログクエリで使用できるログクエリです。関数を作成するには、クエリを実行した後、「保存」ボタンを選択し、ドロップダウンから「関数として保存」を選択します。「関数名」 ボックスに目的の名前 (例: PrivLogins) を入力し、従来のカテゴリ (例: *General*) を入力して、「保存」を選択します。この関数は、関数のエイリアスを使用して KQL で使用できます。
 
-```KQL
-MailboxForward
-```
+    >**ノート:** アカウントには閲覧者のアクセス許可しかないため、このラボで使用する lademo 環境ではこれを行うことはできませんが、クエリをより効率的かつ効果的にするための重要な概念です。
+
+    ```KQL
+    PrivLogins  
+    ```
 
 ## これでラボは完了です。
-
