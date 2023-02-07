@@ -125,7 +125,6 @@
     | extend StartDir =  substring(ProcessName,0, string_size(ProcessName)-string_size(Process))
     | order by StartDir desc, Process asc
     ``` by StartDir desc, Process asc
-```
 
 1. 次のステートメントは、指定した順序で含める列を選択する **project** 演算子を示しています。クエリ ウィンドウで次のステートメントを入力し、「**実行**」を選択します。
 
