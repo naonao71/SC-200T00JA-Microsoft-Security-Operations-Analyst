@@ -16,65 +16,65 @@
 
 この攻撃は、コマンドプロンプトから実行されます。
 
-```Command
-REG ADD "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /V "SOC Test" /t REG_SZ /F /D "C:\temp\startup.bat"
-```
+    ```Command
+    REG ADD "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /V "SOC Test" /t REG_SZ /F /D "C:\temp\startup.bat"
+    ```
 
 #### 攻撃 2 - ユーザーが特権を追加および昇格
 
 攻撃者は新しいユーザーを追加し、新しいユーザーを Administrators グループに昇格させます。  これにより、攻撃者は特権のある別のアカウントでログオンできます。
 
-```Command
-net user theusernametoadd /add
-net user theusernametoadd ThePassword1!
-net localgroup administrators theusernametoadd /add
-```
+    ```Command
+    net user theusernametoadd /add
+    net user theusernametoadd ThePassword1!
+    net localgroup administrators theusernametoadd /add
+    ```
 
 ### 攻撃 3 - ドメイン ネーム サービス / コマンド＆コントロール 
 
 この攻撃は、コマンド＆コントロール (C2) 通信をシミュレートします。
 
-```PowerShell
-param(
-    [string]$Domain = "microsoft.com",
-    [string]$Subdomain = "subdomain",
-    [string]$Sub2domain = "sub2domain",
-    [string]$Sub3domain = "sub3domain",
-    [string]$QueryType = "TXT",
-        [int]$C2Interval = 8,
-        [int]$C2Jitter = 20,
-        [int]$RunTime = 240
-)
-$RunStart = Get-Date
-$RunEnd = $RunStart.addminutes($RunTime)
-$x2 = 1
-$x3 = 1 
-Do {
-    $TimeNow = Get-Date
-    Resolve-DnsName -type $QueryType $Subdomain".$(Get-Random -Minimum 1 -Maximum 999999)."$Domain -QuickTimeout
-    if ($x2 -eq 3 )
-    {
-        Resolve-DnsName -type $QueryType $Sub2domain".$(Get-Random -Minimum 1 -Maximum 999999)."$Domain -QuickTimeout
-        $x2 = 1
+    ```PowerShell
+    param(
+        [string]$Domain = "microsoft.com",
+        [string]$Subdomain = "subdomain",
+        [string]$Sub2domain = "sub2domain",
+        [string]$Sub3domain = "sub3domain",
+        [string]$QueryType = "TXT",
+            [int]$C2Interval = 8,
+            [int]$C2Jitter = 20,
+            [int]$RunTime = 240
+    )
+    $RunStart = Get-Date
+    $RunEnd = $RunStart.addminutes($RunTime)
+    $x2 = 1
+    $x3 = 1 
+    Do {
+        $TimeNow = Get-Date
+        Resolve-DnsName -type $QueryType $Subdomain".$(Get-Random -Minimum 1 -Maximum 999999)."$Domain -QuickTimeout
+        if ($x2 -eq 3 )
+        {
+            Resolve-DnsName -type $QueryType $Sub2domain".$(Get-Random -Minimum 1 -Maximum 999999)."$Domain -QuickTimeout
+            $x2 = 1
+        }
+        else
+        {
+            $x2 = $x2 + 1
+        }
+        if ($x3 -eq 7 )
+        {
+            Resolve-DnsName -type $QueryType $Sub3domain".$(Get-Random -Minimum 1 -Maximum 999999)."$Domain -QuickTimeout
+            $x3 = 1
+        }
+        else
+        {
+            $x3 = $x3 + 1
+        }
+        $Jitter = ((Get-Random -Minimum -$C2Jitter -Maximum $C2Jitter) / 100 + 1) +$C2Interval
+        Start-Sleep -Seconds $Jitter
     }
-    else
-    {
-        $x2 = $x2 + 1
-    }
-    if ($x3 -eq 7 )
-    {
-        Resolve-DnsName -type $QueryType $Sub3domain".$(Get-Random -Minimum 1 -Maximum 999999)."$Domain -QuickTimeout
-        $x3 = 1
-    }
-    else
-    {
-        $x3 = $x3 + 1
-    }
-    $Jitter = ((Get-Random -Minimum -$C2Jitter -Maximum $C2Jitter) / 100 + 1) +$C2Interval
-    Start-Sleep -Seconds $Jitter
-}
-Until ($TimeNow -ge $RunEnd)
-```
+    Until ($TimeNow -ge $RunEnd)
+    ```
 
 ### タスク 2: 検出モデリングを理解します。
 
