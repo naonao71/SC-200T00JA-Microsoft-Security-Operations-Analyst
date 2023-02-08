@@ -26,7 +26,7 @@
 
 8. 「**+新しいワークスペースの作成**」を選択します。
 
-> **注:** まず、新しい Log Analytics ワークスペースを作成します。
+    > **注:** まず、新しい Log Analytics ワークスペースを作成します。
 
 9. 適切なサブスクリプションを選択します。
 
@@ -34,9 +34,9 @@
 
 11. 「名前」 フィールドの 「**インスタンスの詳細**」 で、LogAnalytics ワークスペースに選択する名前を入力します。
 
-> **注:** この名前は、Microsoft Sentinelワークスペース名にもなります。
+    > **注:** この名前は、Microsoft Sentinelワークスペース名にもなります。
 
-12. 適切な地域（例：米国東部）を選択します。  
+12. 適切な地域（例：East US）を選択します。  
 
 13. 「**確認および作成**」 をクリックします。
 
@@ -55,13 +55,14 @@
 2. **Hostname** と入力し、新しい行を入力します。
 
 3. メモ帳の 2 行目から 6 行目に、次のホスト名を各行に 1 つずつコピーします。
-```Notepad
-Host1
-Host2
-Host3
-Host4
-Host5
-```
+
+    ```Notepad
+    Host1
+    Host2
+    Host3
+    Host4
+    Host5
+    ```
 
 4. メニューから**ファイル-名前を付けて保存**を選択し、ファイル名に **HighValue.csv** という名前を付けます。  ファイル タイプを **すべてのファイル(*.*)** に変更します。  次に、「**保存**」を選択します。  ファイルは PC の**ドキュメント** フォルダーに保存できます。
 
@@ -72,9 +73,12 @@ Host5
 7. コマンド バーから「**+ 新規追加**」を選択します。
 
 8. ウォッチリスト ウィザードで、次のように入力します。
-- 名前: HighValueHosts
-- 説明: High Value Hosts
-- ウォッチリストエイリアス：HighValueHosts
+
+    |設定|値|
+    |---|---|
+    |名前|**HighValueHosts**|
+    |説明|**High Value Hosts**|
+    |ウォッチリスト エイリアス|**HighValueHosts**|
 
 9. 「**次へ: ソース >**」を選択します。
 
@@ -92,13 +96,13 @@ Host5
 
 16. 次のKQLステートメントが自動的に実行され、結果が表示されます。
 
-```KQL
-_GetWatchlist('HighValueHosts')
-```
+    ```KQL
+    _GetWatchlist('HighValueHosts')
+    ```
 
-**注:** インポートが完了するまで、2 ～ 3 分かかります。次のタスクに進み、後で戻ってこのコマンドを実行できます。
+    >**ノート:**：インポートが完了するまで、2 ～ 3 分かかります。次のタスクに進み、後で戻ってこのコマンドを実行できます。
 
-独自のKQLステートメントで_GetWatchlist（ 'HighValueHosts'）を使用して、リストにアクセスできるようになりました。参照する列は**Hostname**になります。
+    >**ノート**：独自のKQLステートメントで_GetWatchlist（ 'HighValueHosts'）を使用して、リストにアクセスできるようになりました。参照する列は**Hostname**になります。
 
 17. 右上の「x」を選択して、**ログ** ウィンドウを閉じ、「**OK**」をクリックして、未保存の編集を破棄します。
 
@@ -126,14 +130,30 @@ _GetWatchlist('HighValueHosts')
 
 9. 以下の KQL ステートメントを実行します。
 
-```KQL
-ThreatIntelligenceIndicator
-```
+    ```KQL
+    ThreatIntelligenceIndicator
+    ```
+
 結果を右にスクロールして、DomainName 列を表示します。次の KQL ステートメントを実行して、DomainName 列だけを表示することもできます。  
 
-```KQL
-ThreatIntelligenceIndicator
-| project DomainName
-```
+    ```KQL
+    ThreatIntelligenceIndicator
+    | project DomainName
+    ```
+### <a name="task-4-configure-log-retention"></a>タスク 4:ログ保持期間の構成
+
+このタスクでは、SecurityEvent テーブルの保持期間を変更します。
+
+1. Microsoft Sentinel で、 **構成** セクションの *設定* を選択します。
+
+1. **ワークスペースの設定** を選択します。
+
+1. Log Analytics ワークスペースの、 *設定* セクションで **テーブル** を選択します。
+
+1. **SecurityEvent** テーブルを検索して選択し、省略記号ボタン (...) を選択します。
+
+1. **テーブルの管理** を選択します。
+
+1. *保有期間の合計* で **180 日** を選択しま、**[保存]** をクリックします。
 
 ## これでラボは完了です。
