@@ -106,6 +106,9 @@
 
 15. Windows の「スタート」ボタンを右クリックし、「**Windows PowerShell (管理者)**」を選択します。
 
+16. コピーしたスクリプトを入力し、実行します。
+
+<!--
 16. プロンプトが表示されたら、ユーザー名に「Administrator」を入力します。
 
 17. プロンプトが表示されたら、パスワードとして「Passw0rd」と入力します。
@@ -118,15 +121,16 @@
 
 21. コピーしたスクリプトを入力し、実行します。
 
-<!-- 21. PowerShell の出力の最後の行の指示に従って、デバイスの登録を完了します。 これには、ブラウザーを介したデバイスの認証が含まれます。  URL (https://microsoft.com/devicelogin) をコピーして、新しい Microsoft Edge ブラウザーのタブに入力します。「Windows PowerShell」ウィンドウに戻り、認証のためのコードをコピーして、以前に開いたタブに貼り付け、「**次へ**」を選択します。テナントの管理者アカウントを選択して、「**Are you trying to sign in to Azure Connected Machine Agent?**」 (Azure Connected Machine Agent へのサインインを試みていますか?) ウィンドウで、「**続行**」を選択します。 
+21. PowerShell の出力の最後の行の指示に従って、デバイスの登録を完了します。 これには、ブラウザーを介したデバイスの認証が含まれます。  URL (https://microsoft.com/devicelogin) をコピーして、新しい Microsoft Edge ブラウザーのタブに入力します。「Windows PowerShell」ウィンドウに戻り、認証のためのコードをコピーして、以前に開いたタブに貼り付け、「**次へ**」を選択します。テナントの管理者アカウントを選択して、「**Are you trying to sign in to Azure Connected Machine Agent?**」 (Azure Connected Machine Agent へのサインインを試みていますか?) ウィンドウで、「**続行**」を選択します。 
 
 23. 「Windows PowerShell」ウィンドウで、**"Successfully Onboarded Resource to Azure"** (リソースが Azure に正常にオンボードされました) というメッセージが表示されたら、Azure portal ページに戻り、**スクリプトのダウンロードと実行** タブで「**閉じる**」をクリックします。「**Add servers with Azure Arc**」 (Azure Arc にサーバーを追加する) を閉じて、Azure Arc の「**サーバー**」ページに戻ります。
 -->
 
-22. スクリプトの進行中に、Auzre アカウントが要求たら既存のアカウントを選択します。ブラウザの別ウィンドウが起動し、「Authentication cmplete」が表示されます。
-23. 「**Azure Arcを使用してサーバーを追加**」を閉じます。
+17. スクリプトの進行中に、Auzre アカウントが要求たら既存のアカウントを選択します。ブラウザの別ウィンドウが起動し、「Authentication cmplete」が表示されます。
 
-24. 「**サーバー**」に **WINServer** サーバー名が表示されるまで「**更新**」を選択します。
+18. 「**Azure Arcを使用してサーバーを追加**」を閉じます。
+
+19. 「**サーバー**」に **WINServer** サーバー名が表示されるまで「**更新**」を選択します。
 
 > **注:** この処理には数分かかります。
 
@@ -144,7 +148,7 @@
 
 5. 前に作成したワークスペースの横にある「**＋サーバー追加**」を選択します。
 
-6. 「**Download Windows Agent (64 bit)**」(Windows エージェント(64ビット)のダウンロード) を選択します。
+6. 「Log Analtticsエージェントの手順」を展開して、「**Download Windows Agent (64 bit)**」(Windows エージェント(64ビット)のダウンロード) を選択します。
 
 7. ダウンロードしたファイルを実行します。
 
