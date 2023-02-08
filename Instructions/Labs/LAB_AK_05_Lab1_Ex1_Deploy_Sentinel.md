@@ -140,6 +140,7 @@
     ThreatIntelligenceIndicator
     | project DomainName
     ```
+    
 ### <a name="task-4-configure-log-retention"></a>タスク 4:ログ保持期間の構成
 
 このタスクでは、SecurityEvent テーブルの保持期間を変更します。
