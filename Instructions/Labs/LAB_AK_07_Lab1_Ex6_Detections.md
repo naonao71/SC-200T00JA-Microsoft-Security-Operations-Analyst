@@ -22,7 +22,7 @@
 
 4. DeviceRegistryEvents テーブルは、データが既に正規化されていて、クエリが簡単であるように見えます。行を展開すると、レコードに関連するすべての列が表示されます。
 
-　> **注:** クエリ結果に DeviceRegistryEvents テーブルが表示されない場合は、次の 2 つのクエリの代わりに、DeviceProcessEvents テーブルを置換として使用する方法があります。つまり、前のクエリで表示されたテーブルに応じて、以下の 2 つの例のいずれかを使用します。
+   > **注:** クエリ結果に DeviceRegistryEvents テーブルが表示されない場合は、次の 2 つのクエリの代わりに、DeviceProcessEvents テーブルを置換として使用する方法があります。つまり、前のクエリで表示されたテーブルに応じて、以下の 2 つの例のいずれかを使用します。
 
 5. クエリ結果から、脅威アクターが reg.exe を使用してレジストリ キーにキーを追加し、プログラムが C:\temp にあることがわかります。次のステートメントを実行して、検索演算子をクエリの where 演算子に置き換えます。
 
@@ -33,7 +33,7 @@
    | where RegistryValueData startswith "c:\\temp"
    ```
 
-または、DeviceProcessEvents テーブルを使用して次の KQL クエリを実行することもできます。
+   または、DeviceProcessEvents テーブルを使用して次の KQL クエリを実行することもできます。
 
    ```KQL
    DeviceProcessEvents | where ActionType == "ProcessCreated"
@@ -53,7 +53,7 @@
 
    ![スクリーンショット](../Media/SC200_sysmon_query2.png)
 
-または、DeviceProcessEvents テーブルを使用して次の KQL クエリを実行することもできます。
+   または、DeviceProcessEvents テーブルを使用して次の KQL クエリを実行することもできます。
 
    ```KQL
    DeviceProcessEvents | where ActionType == "ProcessCreated"
