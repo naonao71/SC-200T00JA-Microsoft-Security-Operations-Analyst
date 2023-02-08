@@ -134,13 +134,13 @@
     ThreatIntelligenceIndicator
     ```
 
-結果を右にスクロールして、DomainName 列を表示します。次の KQL ステートメントを実行して、DomainName 列だけを表示することもできます。  
+1. 結果を右にスクロールして、DomainName 列を表示します。次の KQL ステートメントを実行して、DomainName 列だけを表示することもできます。  
 
     ```KQL
     ThreatIntelligenceIndicator
     | project DomainName
     ```
-    
+
 ### <a name="task-4-configure-log-retention"></a>タスク 4:ログ保持期間の構成
 
 このタスクでは、SecurityEvent テーブルの保持期間を変更します。
