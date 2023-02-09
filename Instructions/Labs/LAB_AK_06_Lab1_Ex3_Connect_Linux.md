@@ -106,7 +106,7 @@ ssh <insert your linux IP address here> -l <insert linux user name here>
 
 2. Azure Sentinelポータルで、設定ブレードから「**設定**」、「**ワークスペース設定**」の順に選択します。
 
-3. 「**設定**」領域で「**レガシエージェントの管理**」を選択します。
+3. 「**クラシック**」領域で「**レガシーエージェントの管理**」を選択します。
 
 4. 「**Syslog**」タブを選択します。
 
