@@ -28,7 +28,7 @@
 
 このタスクでは、LinuxホストをCommon Event Format（CEF）コネクタを使用して Microsoft Sentinelに接続します。
 
-1. Microsoft Sentinelの構成領域から「**データコネクタ**」を選択します。  データ コネクタ タブで、リストから**Common Event Format(CEF) via Legacy Agent** コネクタを選択します。
+1. Microsoft Sentinelの構成領域から「**データコネクタ**」を選択します。  データ コネクタ タブで、リストから**レガシーエージェントを使用した Common Event Format(CEF)** コネクタを選択します。
 
 2. コネクタ情報ブレードで「**コネクタページを開く**」を選択します。
 
