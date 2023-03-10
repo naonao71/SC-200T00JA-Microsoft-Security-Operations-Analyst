@@ -191,7 +191,7 @@ DeviceEvents
 
 1. 検索ジョブの新しいテーブル名を記入します。（例：DeviceRegistryEvents_####_SRCH )
 
-1. 検索ジョブ実行し、完了をクリックします。検索ジョブにより、DeviceRegistryEvents_####_SRCH という名前の新しいテーブルが作成されます。
+1. 検索ジョブを実行し、完了をクリックします。検索ジョブにより、DeviceRegistryEvents_####_SRCH という名前の新しいテーブルが作成されます。
 
 1. **[保存した検索]** タブを選択します。
 
