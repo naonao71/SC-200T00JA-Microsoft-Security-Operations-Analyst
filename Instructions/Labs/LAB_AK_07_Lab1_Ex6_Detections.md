@@ -147,7 +147,7 @@
    | extend timestamp = TimeGenerated, HostCustomEntity = Computer, AccountCustomEntity = UserName1
    ```
 
-6. 適切な検出ルールができたので、クエリのあるログ ウィンドウで、コマンド バーの 「**新しいアラート ルール**」 を選択し、「**Azure Sentinel アラートの作成**」 を選択します。
+6. 適切な検出ルールができたので、クエリのあるログ ウィンドウで、コマンド バーの 「**新しいアラート ルール**」 を選択し、「**Microsoft Sentinel アラートの作成**」 を選択します。
 
 7. これにより、分析ルール　ウィザードが起動します。全般タブに次のように入力します
 
