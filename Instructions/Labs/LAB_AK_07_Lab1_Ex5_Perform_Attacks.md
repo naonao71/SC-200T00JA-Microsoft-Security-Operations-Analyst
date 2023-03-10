@@ -118,5 +118,7 @@
     net user theusernametoadd ThePassword1!
     net localgroup administrators theusernametoadd /add
     ```
+    > WIN2のラボ環境のログは反映されるまでに時間がかかる場合があります。AZWIN01の仮想マシンでも同様のコマンドを実行しておくと次の演習がスムーズに進む場合があります。
+
 
 ## 演習 7 に進みます。
