@@ -79,9 +79,7 @@ lab:
 
 1. ブラウザで別のタブを開きます。
 
-1. https://aexprodcus1.vsaex.visualstudio.com/me?mkt=en-US に移動します。
-
-1. On the *We need a few more details* page, select **Continue**.
+1. https://aexprodcus1.vsaex.visualstudio.com/me?mkt=jp-JA に移動します。
 
 2. *詳細情報をいくつか入力する必要があります* ページで、 **続行** をクリックし「**Create new organization**」をクリックします。
 
