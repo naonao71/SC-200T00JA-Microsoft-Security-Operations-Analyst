@@ -382,10 +382,9 @@
 1. 次のステートメントは、文字列フィールドに格納されている JSON を操作する演算子を示しています。多くのログは JSON 形式でデータを送信するため、JSON データをクエリ可能なフィールドに変換する方法を知っている必要があります。クエリ ウィンドウで次のステートメントを入力し、 「**実行**」を選択します。
 
     ```KQL
-    SigninLogs | extend Location =  todynamic(LocationDetails)
-    | extend City =  Location.city
-    | extend City2 = Location["city"]
-    | project Location, City, City2
+    SigninLogs
+    | extend Location = todynamic(Location)
+    | extend City = Location.city
     ```
 
 1. 次の文は、動的配列を行に変換する **mv-expand** 演算子を示しています (複数値展開)。
