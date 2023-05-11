@@ -28,27 +28,7 @@
 
 7. 前のラボで作成した Microsoft Sentinel ワークスペースを選択します。
 
-### タスク 2: Azure Active Directory コネクタを接続する
-
-このタスクでは、Azure Active Directory コネクタを Microsoft Sentinel に接続します。
-
-1. 構成 セクションで、「**データコネクタ**」を選択します。  データ コネクタ ページで、リストから**Azure Active Directory** タイルを選択します。
-
-2. コネクタ情報ブレードで「**コネクタページを開く**」を選択します。
-
-3. 構成から「**Sign-in Logs**」および「**監査ログ**」オプションを選択し、「**変更の適用**」を選択します。
-
-### タスク 3: Azure Active Directory Identity Protection コネクタを接続する
-
-このタスクでは、Azure Active Directory Identity Protection コネクタを Azure Sentinel に接続します。
-
-1. データ コネクタ タブで、リストから「**Azure Active Directory Identity Protection**」コネクタを選択します。
-
-2. コネクタ情報ブレードで「**コネクタページを開く**」を選択します。
-
-3. 「構成」 領域から 「**接続**」 ボタンを選択します。
-
-### タスク 4: Microsoft Defender for Cloud コネクタを接続する。
+### タスク 2: Microsoft Defender for Cloud コネクタを接続する。
 
 このタスクでは、Microsoft Defender for Cloud コネクタを接続します。
 
@@ -62,21 +42,7 @@
 
 1. 下にスクロールし、[Create incidents - Recommended!](インシデントの作成 - 推奨) 領域で、 **Enabled** を選択します。 このオプションを選択すると、このサービスに対して分析ルールが自動的に作成されます。 ここで有効にしなくても、後で *[分析]* ブレードを使って、手動で追加したり、構成を変更したりできます。
 
-### タスク 5: Microsoft 365 Defender コネクタを接続する
-
-このタスクでは、Microsoft 365 Directory コネクタを接続します。
-
-1. データ コネクタ タブで、リストから「**Microsoft 365 Defender (プレビュー)**」コネクタを選択します。
-
-2. コネクタ情報ブレードで「**コネクタページを開く**」を選択します。
-
-3. 「**名前**」チェックボックスを選択して、Microsoft Defender for Endpoint のすべてのチェックボックスを選択します。
-
-1. "Microsoft Defender for Office 365" について同じことを繰り返します。
-
-4. 「**変更の適用**」を選択します。
-
-### タスク 6: Azure アクティビティ コネクタを接続する。
+### タスク 3: Azure アクティビティ コネクタを接続する。
 
 このタスクでは、Azure アクティビティ コネクタを接続します。
 
