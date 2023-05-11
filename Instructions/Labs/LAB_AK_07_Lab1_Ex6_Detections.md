@@ -38,8 +38,8 @@
 
    |設定|値|
    |:----|:----|
-   |名前 |MDE Startup RegKey|
-   |説明 |MDE Startup Regkey in c:\temp|
+   |名前 |Startup RegKey|
+   |説明 |Startup Regkey in c:\temp|
    |戦術 |Persistence|
    |重大度 |高|
 
