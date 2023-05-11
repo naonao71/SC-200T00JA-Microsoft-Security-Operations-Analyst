@@ -13,54 +13,24 @@
    ```KQL
    search "temp\\startup.bat"
    ```
-
-3. 以下の KQL ステートメントを実行します。これは Defender for Endpoint からのデータに焦点を当てています。
-
-   ```KQL
-   search in (Device*) "temp\\startup.bat"
-   ```
-
-4. DeviceRegistryEvents テーブルは、データが既に正規化されていて、クエリが簡単であるように見えます。行を展開すると、レコードに関連するすべての列が表示されます。
-
-   > **注:** クエリ結果に DeviceRegistryEvents テーブルが表示されない場合は、次の 2 つのクエリの代わりに、DeviceProcessEvents テーブルを置換として使用する方法があります。つまり、前のクエリで表示されたテーブルに応じて、以下の 2 つの例のいずれかを使用します。
+4. SecurityEvents テーブルは、データが既に正規化されていて、クエリが簡単であるように見えます。行を展開すると、レコードに関連するすべての列が表示されます。
 
 5. クエリ結果から、脅威アクターが reg.exe を使用してレジストリ キーにキーを追加し、プログラムが C:\temp にあることがわかります。次のステートメントを実行して、検索演算子をクエリの where 演算子に置き換えます。
 
-   ```KQL
-   DeviceRegistryEvents
-   | where ActionType == "RegistryValueSet"
-   | where InitiatingProcessFileName == "reg.exe"
-   | where RegistryValueData startswith "c:\\temp"
-   ```
-
-   または、DeviceProcessEvents テーブルを使用して次の KQL クエリを実行することもできます。
-
-   ```KQL
-   DeviceProcessEvents | where ActionType == "ProcessCreated"
-   | where FileName == "reg.exe"
-   | where ProcessCommandLine contains "c:\\temp"
-   ```
+    ```KQL
+    SecurityEvent | where Activity startswith "4688" 
+    | where Process == "reg.exe" 
+    | where CommandLine startswith "REG" 
+    ```
 
 6. アラートについてできるだけ多くのコンテキストを提供することにより、セキュリティオペレーションセンターアナリストを支援することが重要です。これには、調査グラフで使用するエンティティの投影が含まれます。次のクエリを実行します。
 
-   ```KQL
-   DeviceRegistryEvents
-   | where ActionType == "RegistryValueSet"
-   | where InitiatingProcessFileName == "reg.exe"
-   | where RegistryValueData startswith "c:\\temp"
-   | extend timestamp = TimeGenerated, HostCustomEntity = DeviceName, AccountCustomEntity = InitiatingProcessAccountName
-   ```
-
-   ![スクリーンショット](../Media/SC200_sysmon_query2.png)
-
-   または、DeviceProcessEvents テーブルを使用して次の KQL クエリを実行することもできます。
-
-   ```KQL
-   DeviceProcessEvents | where ActionType == "ProcessCreated"
-   | where FileName == "reg.exe"
-   | where ProcessCommandLine contains "c:\\temp"
-   | extend timestamp = TimeGenerated, HostCustomEntity = DeviceName, AccountCustomEntity = InitiatingProcessAccountName
-   ```
+    ```KQL
+    SecurityEvent | where Activity startswith "4688" 
+    | where Process == "reg.exe" 
+    | where CommandLine startswith "REG" 
+    | extend timestamp = TimeGenerated, HostCustomEntity = Computer, AccountCustomEntity = SubjectUserName
+    ```
 
 7.  適切な検出ルールができたので、クエリのあるログ ウィンドウで、コマンド バーの 「**新しいアラート ルール**」 を選択します。  次に、「**Microsoft Sentinel アラートの作成**」 を選択します。
 
@@ -94,7 +64,7 @@
 
 15. **確認と応答** タブで、**作成** を選択します。
 
-### タスク 2: SecurityEventによる攻撃2の検出
+### タスク 2: 特権昇格攻撃の検出
 
 このタスクでは、セキュリティ イベント コネクタがインストールされているホスト上の **攻撃 2 (Win2)** の検出を作成します。
 
