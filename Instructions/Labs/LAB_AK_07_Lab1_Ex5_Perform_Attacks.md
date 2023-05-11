@@ -6,9 +6,7 @@
 
 後にMicrosoft Sentinelで検知・調査するために使用する攻撃をシミュレートすることになります。
 
-### タスク 1: Defender for Endpoint によって構成した Windows を攻撃します。
-
-このタスクでは、Microsoft Defender for Endpoint が構成されているホストに対して攻撃を実行します。
+### タスク 1: レジストリ キーの追加による永続化攻撃
 
 1. 管理者として WIN2 仮想マシンにログインします。パスワードは**Pa55w.rd** です。  
 
