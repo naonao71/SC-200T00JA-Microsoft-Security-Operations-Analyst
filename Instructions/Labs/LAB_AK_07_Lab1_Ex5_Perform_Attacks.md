@@ -22,7 +22,7 @@
     cd temp
     ```
 
-1. 攻撃 1 -このコマンドをコピーして実行します。
+1. このコマンドをコピーして実行します。
 
     ```
     REG ADD "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /V "SOC Test" /t REG_SZ /F /D "C:\temp\startup.bat"
