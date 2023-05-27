@@ -109,8 +109,8 @@
 
 
 
-
-<--### タスク 3: 非 Azure Windows マシンを接続する。
+<--
+### タスク 3: 非 Azure Windows マシンを接続する。
 
 このタスクでは、非 Azure Windows 仮想マシンを Microsoft Sentinel に接続します。
 
