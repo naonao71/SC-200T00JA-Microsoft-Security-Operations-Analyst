@@ -6,9 +6,10 @@
 
 あなたは Microsoft Sentinel を実装した企業で働いているセキュリティ オペレーションアナリストです。あなたはコマンドと制御 (C2 または C&C) テクニックについて脅威インテリジェンスを受け取りました。その脅威に対してハンティングとウォッチを実行する必要があります。
 
-> **重要:** このラボで使用するログデータは、前のモジュールで作成したものです。演習 5 の WIN1 サーバーの**攻撃 3** を確認してください。
+> **重要:** このラボで使用するログデータは、前のモジュールで作成したものです。演習 6 の WINServer サーバーの **タスク 3** を確認してください。
 
 > **注:**  前のモジュールでデータを探索するプロセスをすでに経験しているため、ラボでは開始するための KQL ステートメントを提供しています。  
+>**ノート:** **[interactive lab simulation](https://mslabs.cloudguides.com/guides/SC-200%20Lab%20Simulation%20-%20Perform%20threat%20hunting%20in%20Microsoft%20Sentinel)** このラボを自分のペースで確認できます。ホスト型のラボと多少の違いはありますが、主要な概念とアイデアは同じです。
 
 ### タスク 1: ハンティング クエリの作成
 
@@ -30,105 +31,90 @@
 
 8. 新規クエリ1のスペースに以下のKQLステートメントを入力します。
 
-> **重要:** エラーを防止するため、最初に KQL クエリをメモ帳に貼り付けてから、**新しいクエリ 1** のログ ウィンドウにコピーしてください。
+   > **重要:** エラーを防止するため、最初に KQL クエリをメモ帳に貼り付けてから、**新しいクエリ 1** のログ ウィンドウにコピーしてください。
 
-```KQL
-let lookback = 2d;
-DeviceEvents
-| where TimeGenerated >= ago(lookback) 
-| where ActionType == "DnsQueryResponse"
-| extend c2 = substring(tostring(AdditionalFields.DnsQueryString),0,indexof(tostring(AdditionalFields.DnsQueryString),"."))
-| where c2 startswith "sub"
-| summarize count() by bin(TimeGenerated, 3m), c2
-| where count_ > 5
-| render timechart 
-```
+    ```KQL
+    let lookback = 2d; 
+    SecurityEvent | where TimeGenerated >= ago(lookback) 
+    | where EventID == 4688 and Process =~ "powershell.exe"
+    | extend PwshParam = trim(@"[^/\\]*powershell(.exe)+" , CommandLine) 
+    | project TimeGenerated, Computer, SubjectUserName, PwshParam 
+    | summarize min(TimeGenerated), count() by Computer, SubjectUserName, PwshParam 
+    | order by count_ desc nulls last 
+    ```
 
-   ![スクリーンショット](../Media/SC200_hunting1.png)
+9. さまざまな結果を確認します。これで、環境で実行されている PowerShell 要求を特定できました。
 
-9. このステートメントの目的は、C2 が一貫してビーコンを出しているかどうかを確認するための視覚化を提供することです。オペレーター概要などで、3m の設定を 30 秒以上に調整してください。count_ > 5 の設定を他のスレッショルド カウントに変更して、影響を確認します。
+10. PwshParam フィールドの値に、「-file c2.ps1」と表示されている結果のチェックボックスを選択します。
 
-10. これで、C2 サーバーにビーコン送信されている DNS リクエストが特定できました。  次に、どのデバイスがビーコンになっているかを確認します。  次の KQL ステートメントを入力します。
+11. 中央のコマンド バーで、「**ブックマークの追加**」 ボタンを選択します。
 
-```KQL
-let lookback = 2d;
-DeviceEvents
-| where TimeGenerated >= ago(lookback) 
-| where ActionType == "DnsQueryResponse"
-| extend c2 = substring(tostring(AdditionalFields.DnsQueryString),0,indexof(tostring(AdditionalFields.DnsQueryString),"."))
-| where c2 startswith "sub"
-| summarize cnt=count() by bin(TimeGenerated, 3m), c2, DeviceName
-| where cnt > 5
-```
+12. 「エンティティ マッピング」の下にある 「+ Add new entriy」をクリックします。
 
-   ![スクリーンショット](../Media/SC200_hunting2.png)
+    |エンティティ|識別子|データフィールド|
+    |:----|:----|:----|
+    |Host|Hostname|Computer|
 
-> **注:** 生成されるログ データは、1 つのデバイスからのみです。
+13. 「戦術と手法」で、「Command and Control」を選択します。
 
-11. ウィンドウの右上の「x」を選択して、ログ ウィンドウを閉じ、「**OK**」をクリックして、変更を破棄します。再度 Microsoft Sentinel ワークスペースを選択し、**脅威管理** 領域の下で、**ハンティング** を選択します。
+14. 「作成」をクリックします。
 
-12. コマンド バーで「**+ 新しいクエリ**」を選択します。
+15. ウィンドウの右上にある「X」を選択して「ログ」ウィンドウを閉じ、「OK」を選択して変更を破棄します。
+16. Microsoft Sentinel ワークスペースをもう一度選択し、「脅威管理」セクションの「ハンティング」ページを選択します。
+17. 「クエリ」タブを選択し、コマンド バーから 「+ 新しいクエリ」を選択します。
+18. 「カスタム クエリの作成」ウィンドウの「名前」に「PowerShell Hunt」と入力します。
+19. カスタム クエリの場合は、次の KQL ステートメントを入力します。
 
-13. 名前には「**C2 Hunt**」と入力します。
+    ```KQL
+    let lookback = 2d; 
+    SecurityEvent | where TimeGenerated >= ago(lookback) 
+    | where EventID == 4688 and Process =~ "powershell.exe"
+    | extend PwshParam = trim(@"[^/\\]*powershell(.exe)+" , CommandLine) 
+    | project TimeGenerated, Computer, SubjectUserName, PwshParam 
+    | summarize min(TimeGenerated), count() by Computer, SubjectUserName, PwshParam 
+    | order by count_ desc nulls last 
+    ```
+20. 「エンティティ マッピング」を設定します。
 
-14. **カスタム クエリ**には、次の KQL ステートメントを入力します。
+    |エンティティ|識別子|データフィールド|
+    |:----|:----|:----|
+    |Host|Hostname|Computer|
 
-```KQL
-let lookback = 2d;
-DeviceEvents
-| where TimeGenerated >= ago(lookback) 
-| where ActionType == "DnsQueryResponse"
-| extend c2 = substring(tostring(AdditionalFields.DnsQueryString),0,indexof(tostring(AdditionalFields.DnsQueryString),"."))
-| where c2 startswith "sub"
-| summarize cnt=count() by bin(TimeGenerated, 3m), c2, DeviceName
-| where cnt > 5
-```
+21. **戦術と手法**で、「**Command and Control**」を選択します。「**作成**」を選択して、ハンティング クエリを作成します。
 
-15. **エンティティ マッピング (プレビュー)** で、以下を選択します。
+22. **「Microsoft Sentinel | ハンティング」** ブレードで、**クエリの検索** から先ほど作成した **PowerShell Hunt** クエリを検索します。
 
-|設定|値|
-|:----|:----|
-|エンティティの型|Host|
-|ID|HostName|
-|値|DeviceName|
+23. リストの中から「**PowerShell Hunt**」を選択します。
 
-16. **戦術と手法**で、「**Command and Control**」を選択します。「**作成**」を選択して、ハンティング クエリを作成します。
+24. 結果の数は、結果の列の下に表示されます。
 
-17. **「Microsoft Sentinel | ハンティング」** ブレードで、**クエリの検索** から先ほど作成した **C2 Hunt** クエリを検索します。
+25. 「**結果の表示**」ボタンを選択します。KQLクエリが自動的に実行されます。
 
-18. リストの中から「**C2 Hunt**」を選択します。
+26. ウィンドウの右上にある「X」を選択して「ログ」ウィンドウを閉じ、「OK」を選択して変更を破棄します。
 
-19. 画面の右側の「**クエリの実行**」ボタンを選択します。
+27. 「**PowerShell Hunt**」を右クリックして、「**ライブストリームに追加**」を選択します。
 
-20. 結果の数は、結果の列の下に表示されます。
+28. 「状態」が 「実行中」になっていることを確認します。これはバックグラウンドで 30 秒ごとに実行され、新しい結果が見つかると Azure Portal (ベルのアイコン) に通知が表示されます。
 
-21. 「**結果の表示**」ボタンを選択します。KQLクエリが自動的に実行されます。
+29. 「**ブックマーク**」タブを選択します。
 
-22. 結果の最初の行を選択します。 
+30. 結果一覧で作成したブックマークを選択します。
 
-23. 「**ブックマークの追加**」ボタンを選択します。
+31. 「**調査**」 ボタンを選択します。
 
-24. **ブックマークの追加** ブレードで、「**作成**」 を選択します。
+32. グラフを調査します。
 
-25. Microsoft Sentinel portal のハンティング ページに戻ります (ヒント: 左にスクロールします)。
+33. 右上の「x」を選択して、ウィンドウを閉じて、Microsoft Sentinel ポータルのハンティング ページに戻ります。
 
-26. 「**ブックマーク**」タブを選択します。
+34. >> アイコンを選択して右ブレードを非表示にし、省略記号 (...) アイコンが表示されるまで右にスクロールします。
 
-27. 結果一覧で作成したブックマークを選択します。
+35. 右側の行の最後にある **「...」** を選択して、コンテキスト メニューを開きます。
 
-28. 「**調査**」 ボタンを選択します。
+36. 「**既存のインシデントに追加**」を選択します。
 
-29. グラフを調査します。
+37. インシデントの 1 つを選択し、 「追加」を選択します。
 
-30. 右上の「x」を選択して、ウィンドウを閉じて、Microsoft Sentinel ポータルのハンティング ページに戻ります。
-
-31. 「**クエリ**」タブを選択します
-
-32. **C2 Hunt** クエリを再度検索して、選択します。
-
-33. 右側の行の最後にある **「...」** を選択して、コンテキスト メニューを開きます。
-
-34. 「**ライブストリームに追加**」を選択します。
+38. 左にスクロールすると、「重大度」列にインシデントのデータが表示されます。
 
 ### タスク 2: NRTクエリルールの作成
 
@@ -142,8 +128,8 @@ DeviceEvents
 
     |項目|値|
     |---|---|
-    |名前|**NRT C2 Hunt**|
-    |説明|**NRT C2 Hunt**|
+    |名前|**NRT PowerShell Hunt**|
+    |説明|**NRT PowerShell Hunt**|
     |戦術と手法|**Command and Control**|
     |重大度|**高**|
 
@@ -152,15 +138,26 @@ DeviceEvents
 1. ルールのクエリに以下のKQLクエリを入力します。
 
     ```KQL
-    let lookback = 2d;
-    DeviceEvents | where TimeGenerated >= ago(lookback) 
-    | where ActionType == "DnsQueryResponse"
-    | extend c2 = substring(tostring(AdditionalFields.DnsQueryString),0,indexof(tostring(AdditionalFields.DnsQueryString),"."))
-    | where c2 startswith "sub"
-    | summarize cnt=count() by bin(TimeGenerated, 3m), c2, DeviceName
-    | where cnt > 5
+    let lookback = 2d; 
+    SecurityEvent | where TimeGenerated >= ago(lookback) 
+    | where EventID == 4688 and Process =~ "powershell.exe"
+    | extend PwshParam = trim(@"[^/\\]*powershell(.exe)+" , CommandLine) 
+    | project TimeGenerated, Computer, SubjectUserName, PwshParam 
+    | summarize min(TimeGenerated), count() by Computer, SubjectUserName, PwshParam
     ```
-    
+
+1. **クエリ結果の表示>** を選択して、クエリにエラーがないことを確認します。
+
+1. ウィンドウの右上にある「X」を選択して「ログ」ウィンドウを閉じ、「OK」を選択して変更を破棄します。
+
+1. 「結果のシミュレーション」で「現在のデータでテスト」を選択します。1 日あたりのアラートの予想数に注目してください。
+
+1. 「エンティティ マッピング」を設定します。
+
+    |エンティティ|識別子|データフィールド|
+    |:----|:----|:----|
+    |Host|Hostname|Computer|
+
 1. 残りのオプションはデフォルトのままにします。「次：インシデントの設定>」をクリックします。
 
 1. インシデントの設定タブで、既定値のままにして、「次：自動応答>」をクリックします。
@@ -175,25 +172,22 @@ DeviceEvents
 
 1. Microsoft Sentinel で **[検索]** ページを選択します。 
 
-1. コマンド バーから **[復元]** ボタンを選択します。
+1. 検索ボックスに「reg.exe」と入力し、「開始」を選択します。
 
-    >**注:** ラボには復元元となるアーカイブ済みのテーブルがありません。 通常のプロセスでは、アーカイブ済みのテーブルを復元して検索ジョブに含めます。
+1. クエリを実行する新しいウィンドウが開きます。右上の省略記号アイコン (...) を選択し、検索ジョブ モードを切り替えます。
 
-1. 使用可能なオプションを確認し、 **[キャンセル]** ボタンを選択します。
+1. コマンド バーから **検索ジョブ** ボタンを選択します。
 
-1. **[検索]** タブを選択します。
+1. 検索ジョブは、結果が到着するとすぐに、結果を含む新しいテーブルを作成します。結果は「保存された検索」タブから参照できます。
 
-1. 検索ボックスの下にある "*テーブル*" フィルターを選択し、**DeviceRegistryEvents** に変更し、 **[適用]** を選択します。
+1. ウィンドウの右上にある「X」を選択して「ログ」ウィンドウを閉じ、「OK」を選択して変更を破棄します。
 
-1. 検索ボックスに「**reg.exe**」と入力し、 **[開始]** を選択します。
+1. コマンド バーから **復元**タブを選択し、「復元」ボタンを選択します。
 
-1. ログが開くので、画面右上にある **「...」** を選択して「検索ジョブモード」に変更します。
+1. 「復元するテーブルの選択」で、**SecurityEvent** を検索して選択します。
 
-1. 検索ジョブの新しいテーブル名を記入します。（例：DeviceRegistryEvents_####_SRCH )
+1. 「復元」ボタンを選択します。
 
-1. 検索ジョブを実行し、完了をクリックします。検索ジョブにより、DeviceRegistryEvents_####_SRCH という名前の新しいテーブルが作成されます。
-
-1. **[保存した検索]** タブを選択します。
-
-1. **検索結果の表示** を選択します。検索結果の画面が表示されます。
+1. 復元ジョブが数分間実行され、データが新しいテーブルで使用できるようになります。
    
+## 演習 2 に進みます。
