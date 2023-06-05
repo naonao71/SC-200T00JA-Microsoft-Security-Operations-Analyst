@@ -6,6 +6,8 @@
 
 あなたは、Microsoft Defender for Cloud を使用してクラウド ワークロード保護を実装している企業に勤務するセキュリティ オペレーションアナリストです。  このラボでは、Microsoft Defender for Cloud を有効化します。
 
+>**ノート:** **[interactive lab simulation](https://mslabs.cloudguides.com/guides/SC-200%20Lab%20Simulation%20-%20Enable%20Microsoft%20Defender%20for%20Cloud)** このラボを自分のペースで確認できます。ホスト型のラボと多少の違いはありますが、主要な概念とアイデアは同じです。
+
 ### タスク 1: Azure ポータル にアクセスし、サブスクリプションを設定します。
 
 このタスクでは、このラボと今後のラボを完了するために必要なAzureサブスクリプションを設定します。
