@@ -8,7 +8,7 @@
 
 あなたは、Microsoft Sentinel データ コネクタを使用して、さまざまなソースからのログ データを統合することを計画しています。組織の各データ ソースを適切な Microsoft Sentinel データ コネクタにマップする管理用のコネクタ計画を作成する必要があります。
 
-**重要な警告!**  仮想マシン WIN2はモジュール７で使います。  仮想マシンを保存します。   保存せずにラボを終了する場合は、WIN2にコネクタを再度インストールする必要があります。
+>**ノート:** **[interactive lab simulation](https://mslabs.cloudguides.com/guides/SC-200%20Lab%20Simulation%20-%20Connect%20data%20to%20Microsoft%20Sentinel%20using%20data%20connectors)** このラボを自分のペースで確認できます。ホスト型のラボと多少の違いはありますが、主要な概念とアイデアは同じです。
 
 ### タスク 1: Microsoft Sentinel ワークスペースにアクセスする。
 
