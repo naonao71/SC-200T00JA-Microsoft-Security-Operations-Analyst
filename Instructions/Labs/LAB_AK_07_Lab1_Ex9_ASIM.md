@@ -41,7 +41,7 @@ lab:
 
 
 
-
+<!--
 ### タスク 1: Microsoft 365 Defender レジストリイベントの KQL 関数を開発する
 
 このタスクでは、DeviceRegistryEvents のワークスペース パーサーである関数を作成します。
