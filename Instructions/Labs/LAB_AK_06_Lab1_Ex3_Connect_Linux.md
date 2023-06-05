@@ -6,6 +6,8 @@
 
 あなたは、Microsoft Sentinelを導入した企業に勤務するセキュリティ・オペレーション・アナリストです。あなたは、組織内の多くのデータソースからログデータを接続する方法を学ぶ必要があります。次のデータソースは、Common Event Formatting (CEF)とSyslogコネクタを使用するLinux仮想マシンです。
 
+>**ノート:** **[interactive lab simulation](https://mslabs.cloudguides.com/guides/SC-200%20Lab%20Simulation%20-%20Connect%20Linux%20hosts%20to%20Microsoft%20Sentinel%20using%20data%20connectors)** このラボを自分のペースで確認できます。ホスト型のラボと多少の違いはありますが、主要な概念とアイデアは同じです。
+
 ### タスク 1: Microsoft Sentinel ワークスペースにアクセスする。
 
 このタスクでは、Microsoft Sentinel ワークスペースにアクセスします。
