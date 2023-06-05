@@ -12,6 +12,7 @@ lab:
 
 Microsoft Sentinel を使用すると、データ全体にカスタム ブックを作成でき、データ ソースに接続するとすぐにデータ全体の分析情報をすばやく取得できる組み込みのブック テンプレートも付属しています。
 
+>**ノート:** **[interactive lab simulation](https://mslabs.cloudguides.com/guides/SC-200%20Lab%20Simulation%20-%20Create%20workbooks)** このラボを自分のペースで確認できます。ホスト型のラボと多少の違いはありますが、主要な概念とアイデアは同じです。
 
 ### タスク 1: ブック テンプレートを調べる
 
