@@ -12,6 +12,8 @@
 
 エンティティ行動分析を実行して異常を検出し、エンティティ分析ページを提供するように Microsoft Sentinel を構成する必要があります。
 
+>**ノート:** **[interactive lab simulation](https://mslabs.cloudguides.com/guides/SC-200%20Lab%20Simulation%20-%20Explore%20entity%20behavior%20analytics)** このラボを自分のペースで確認できます。ホスト型のラボと多少の違いはありますが、主要な概念とアイデアは同じです。
+
 ### タスク 1: エンティティの動作を有効にする
 
 このタスクでは、Microsoft Sentinel でエンティティの行動分析を有効にします。
