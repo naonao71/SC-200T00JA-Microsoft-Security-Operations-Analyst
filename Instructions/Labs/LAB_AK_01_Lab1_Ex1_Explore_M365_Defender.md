@@ -12,6 +12,8 @@ lab:
 
 あなたは Microsoft 365 Defender を実装している企業で働くセキュリティ オペレーションアナリストです。EOP と Microsoft Defender for Office 365 に事前設定されたセキュリティ ポリシーを割り当てることにより開始しました。
 
+>**ノート:** **[interactive lab simulation](https://mslabs.cloudguides.com/guides/SC-200%20Lab%20Simulation%20-%20Explore%20Microsoft%20365%20Defender)** このラボを自分のペースで確認できます。ホスト型のラボと多少の違いはありますが、主要な概念とアイデアは同じです。
+
 ### タスク 1: Microsoft 365 資格情報の取得
 
 ラボを起動すると、無料のトライアル テナントを利用して Microsoft Virtual Lab 環境にアクセスできるようになります。このテナントには自動的に一意のユーザー名とパスワードが割り当てられます。Microsoft Virtual Lab 環境で Azure と Microsoft 365 にサインインするには、このユーザー名とパスワードを取得する必要があります。 
