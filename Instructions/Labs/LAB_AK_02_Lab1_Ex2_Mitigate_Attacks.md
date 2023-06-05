@@ -8,6 +8,8 @@
 
 Defender for Endpoint の攻撃緩和機能を確認するため、シミュレーション攻撃を 2 回行います。
 
+>**ノート:** **[interactive lab simulation](https://mslabs.cloudguides.com/guides/SC-200%20Lab%20Simulation%20-%20Mitigate%20attacks%20with%20Microsoft%20Defender%20for%20Endpoint)** このラボを自分のペースで確認できます。ホスト型のラボと多少の違いはありますが、主要な概念とアイデアは同じです。
+
 ### タスク 1: シミュレーション攻撃
 
 このタスクでは、シミュレーション攻撃を 2 回行って、Microsoft Defender for Endpoint の機能を確認します。
