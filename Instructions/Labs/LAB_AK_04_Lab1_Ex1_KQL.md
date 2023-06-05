@@ -359,7 +359,7 @@
     "Event: NotifySliceRelease (resourceName=PipelineScheduler, totalSlices=27, sliceNumber=22, lockTime=02/17/2016 08:41:01, releaseTime=02/17/2016 08:41:00, previousLockTime=02/17/2016 08:40:01)",
     "Event: NotifySliceRelease (resourceName=PipelineScheduler, totalSlices=27, sliceNumber=16, lockTime=02/17/2016 08:41:00, releaseTime=02/17/2016 08:41:00, previousLockTime=02/17/2016 08:40:00)"
     ];
-    Traces  
+    Traces   
     | parse EventText with * "resourceName=" resourceName ", totalSlices=" totalSlices:long * "sliceNumber=" sliceNumber:long * "lockTime=" lockTime ", releaseTime=" releaseTime:date "," * "previousLockTime=" previousLockTime:date ")" *  
     | project resourceName, totalSlices, sliceNumber, lockTime, releaseTime, previousLockTime
     ```
@@ -373,14 +373,12 @@
 1. 次の例は、SigninLogs のパッケージされたフィールドを分割する方法を示しています。クエリ ウィンドウで次のステートメントを入力し、「**実行**」を選択します。
 
     ```KQL
-    SigninLogs | extend OS = DeviceDetail.operatingSystem, Browser = DeviceDetail.browser
-    | extend CAPol0Name = tostring(ConditionalAccessPolicies[0].displayName), CAPol0Result = tostring(ConditionalAccessPolicies[0].result)
-    | extend CAPol1Name = tostring(ConditionalAccessPolicies[1].displayName), CAPol1Result = tostring(ConditionalAccessPolicies[1].result)
-    | extend CAPol2Name = tostring(ConditionalAccessPolicies[2].displayName), CAPol2Result = tostring(ConditionalAccessPolicies[2].result)
-    | extend StatusCode = tostring(Status.errorCode), StatusDetails = tostring(Status.additionalDetails)
-    | extend Date = startofday(TimeGenerated), City = tostring(LocationDetails.city)
-    | summarize count() by Date, Identity, UserDisplayName, UserPrincipalName, IPAddress, City, ResultType, ResultDescription, StatusCode, StatusDetails, CAPol0Name, CAPol0Result, CAPol1Name, CAPol1Result, CAPol2Name, CAPol2Result
-    | sort by Date
+    SigninLogs 
+    | extend OS = DeviceDetail.operatingSystem, Browser = DeviceDetail.browser 
+    | extend StatusCode = tostring(Status.errorCode), StatusDetails = tostring(Status.additionalDetails) 
+    | extend Date = startofday(TimeGenerated) 
+    | summarize count() by Date, Identity, UserDisplayName, UserPrincipalName, IPAddress, ResultType, ResultDescription, StatusCode, StatusDetails 
+    | sort by Date
     ```
 
     >**重要:** 動的なフィールドの種類は JSON のように見えますが、JSON に存在しないため、JSON モデルが表現できない値を保持できます。したがって、動的な値を JSON 形式にする場合、JSON で表現できない値は文字列の値になります。 
@@ -388,23 +386,29 @@
 1. 次のステートメントは、文字列フィールドに格納されている JSON を操作する演算子を示しています。多くのログは JSON 形式でデータを送信するため、JSON データをクエリ可能なフィールドに変換する方法を知っている必要があります。クエリ ウィンドウで次のステートメントを入力し、 「**実行**」を選択します。
 
     ```KQL
-    SigninLogs
-    | extend Location = todynamic(Location)
-    | extend City = Location.city
+    SigninLogs 
+    | extend AuthDetails =  todynamic(AuthenticationDetails) 
+    | extend AuthMethod =  AuthDetails[0].authenticationMethod 
+    | extend AuthResult = AuthDetails[0].["authenticationStepResultDetail"] 
+    | project AuthMethod, AuthResult, AuthDetails 
     ```
 
 1. 次の文は、動的配列を行に変換する **mv-expand** 演算子を示しています (複数値展開)。
 
     ```KQL
-    SigninLogs | mv-expand Location = todynamic(LocationDetails)
+    SigninLogs 
+    | mv-expand AuthDetails = todynamic(AuthenticationDetails) 
+    | project AuthDetails
     ```
+
+1. 「>」 を選択して最初の行を展開し、もう一度 「AuthDetails」の横に移動して、展開された結果を確認します。
 
 1. 次の文は、各レコードにサブクエリを適用し、すべてのサブクエリの結果の和集合を返す **mv-apply** 演算子を示しています。
 
     ```KQL
-    SigninLogs  
-    | mv-apply Location = todynamic(LocationDetails) on 
-    ( where Location.countryOrRegion == "ES")
+    SigninLogs 
+    | mv-apply AuthDetails = todynamic(AuthenticationDetails) on
+    (where AuthDetails.authenticationMethod == "Password")
     ```
 
 2. 関数は、保存された名前をコマンドとして他のログクエリで使用できるログクエリです。関数を作成するには、クエリを実行した後、「保存」ボタンを選択し、ドロップダウンから「関数として保存」を選択します。「関数名」 ボックスに目的の名前 (例: PrivLogins) を入力し、従来のカテゴリ (例: *General*) を入力して、「保存」を選択します。この関数は、関数のエイリアスを使用して KQL で使用できます。
