@@ -8,6 +8,8 @@
 
 最初に、Defender for Endpoint 環境を初期化します。次に、デバイスでオンボード スクリプトを実行し、デプロイ対象の初期デバイスをオンボードします。環境のセキュリティを構成します。最後に、デバイス グループを作成し、適切なデバイスを割り当てます。
 
+>**ノート:** **[interactive lab simulation](https://mslabs.cloudguides.com/guides/SC-200%20Lab%20Simulation%20-%20Deploy%20Microsoft%20Defender%20for%20Endpoint)** このラボを自分のペースで確認できます。ホスト型のラボと多少の違いはありますが、主要な概念とアイデアは同じです。
+
 ### タスク 1: Microsoft Defender for Endpoint の初期化
 
 このタスクでは、Microsoft Defender for Endpoint ポータルの初期化を行います。
