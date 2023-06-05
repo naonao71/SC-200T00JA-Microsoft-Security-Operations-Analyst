@@ -6,6 +6,8 @@
 
 あなたは Microsoft Sentinel を実装した企業で働いているセキュリティ オペレーションアナリストです。Microsoft Sentinel ノートブック を使った脅威ハンティングの利点を調査する必要があります。
 
+>**ノート:** **[interactive lab simulation](https://mslabs.cloudguides.com/guides/SC-200%20Lab%20Simulation%20-%20Hunt%20for%20threats%20using%20notebooks%20in%20Microsoft%20Sentinel)** このラボを自分のペースで確認できます。ホスト型のラボと多少の違いはありますが、主要な概念とアイデアは同じです。
+
 ### タスク 1: ノートブックのハンティング
 
 このタスクでは、Microsoft Sentinel でノートブックを使用する方法について説明します。
