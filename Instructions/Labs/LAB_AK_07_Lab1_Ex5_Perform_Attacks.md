@@ -6,6 +6,8 @@
 
 後にMicrosoft Sentinelで検知・調査するために使用する攻撃をシミュレートすることになります。
 
+>**ノート:** **[interactive lab simulation](https://mslabs.cloudguides.com/guides/SC-200%20Lab%20Simulation%20-%20Perform%20simulated%20attacks)** このラボを自分のペースで確認できます。ホスト型のラボと多少の違いはありますが、主要な概念とアイデアは同じです。
+
 ### タスク 1: レジストリ キーの追加による永続化攻撃
 
 1. 管理者として WINServer 仮想マシンにログインします。パスワードは**Pa55w.rd** です。  
