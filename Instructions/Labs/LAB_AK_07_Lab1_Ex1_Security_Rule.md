@@ -6,6 +6,8 @@
 
 あなたは、Microsoft Sentinelを導入した企業に勤務するセキュリティ・オペレーション・アナリストです。Microsoft Sentinelを使用して、脅威を検出し、軽減する方法を学ぶ必要があります。まず、Defender for CloudからMicrosoft Sentinelに来るアラートを重要度によってフィルタリングする必要があります。 
 
+>**ノート:** **[interactive lab simulation](https://mslabs.cloudguides.com/guides/SC-200%20Lab%20Simulation%20-%20Modify%20a%20Microsoft%20Security%20rule)** このラボを自分のペースで確認できます。ホスト型のラボと多少の違いはありますが、主要な概念とアイデアは同じです。
+
 ### タスク 1: Microsoft Security ルールの有効化
 
 このタスクでは、Microsoft セキュリティルールを有効化します。
