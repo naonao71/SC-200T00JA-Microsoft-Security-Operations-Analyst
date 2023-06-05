@@ -8,7 +8,7 @@ lab:
 
 ## ラボのシナリオ
 
-あなたは、Microsoft Sentinelを実装した会社で働くセキュリティ運用アナリストです。特定の Windows レジストリー・イベント用に ASIM パーサーをモデル化する必要があります。これらの単純化されたパーサーは、ASIM パーサー・レジストリー・イベント正規化標準 (https://docs.microsoft.com/en-us/azure/sentinel/registry-event-normalization-schema) に従って、後で最終化されます。
+あなたは、Microsoft Sentinelを実装した会社で働くセキュリティ運用アナリストです。特定の Windows レジストリー・イベント用に ASIM パーサーをモデル化する必要があります。これらの簡略化されたパーサーは、[Advanced Security Information Model (ASIM) レジストリ イベント正規化スキーマのリファレンス](https://learn.microsoft.com/ja-jp/azure/sentinel/normalization-schema-registry-event) に従って後で完成します。
 
 >**ノート:** **[interactive lab simulation](https://mslabs.cloudguides.com/guides/SC-200%20Lab%20Simulation%20-%20Create%20Advanced%20Security%20Information%20Model%20Parsers)** このラボを自分のペースで確認できます。ホスト型のラボと多少の違いはありますが、主要な概念とアイデアは同じです。
 
