@@ -6,6 +6,9 @@
 
 あなたは、Microsoft Sentinel を実装しようとしている企業で働いているセキュリティ オペレーションアナリストです。コストを最小限に抑え、コンプライアンス規制を満たし、セキュリティ チームが日常の職務を遂行するのに最も管理しやすい環境を提供するという会社の要件を満たすように、Microsoft Sentinel 環境を設定する責任があります。
 
+>**ノート:** **[interactive lab simulation](https://mslabs.cloudguides.com/guides/SC-200%20Lab%20Simulation%20-%20Configure%20your%20Microsoft%20Sentinel%20environment)** このラボを自分のペースで確認できます。ホスト型のラボと多少の違いはありますが、主要な概念とアイデアは同じです。
+
+
 ### タスク 1: Microsoft Sentinel ワークスペースを初期化する。
 
 このタスクでは、Microsoft Sentinel ワークスペースを作成します。
