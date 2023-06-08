@@ -2,7 +2,9 @@
 
 ## ラボ シナリオ
 
+<!--
 ![Lab overview.](../Media/SC-200-Lab_Diagrams_Mod7_L1_Ex3.png)
+--!>
 
 あなたは、Microsoft Sentinelを導入した企業に勤務するセキュリティ・オペレーション・アナリストです。Microsoft Sentinelを使用して、脅威を検出し、軽減する方法を学ぶ必要があります。データソースをMicrosoft Sentinelに接続した後、カスタム分析ルールを作成して、環境内の脅威と異常な動作を発見するのに役立ちます。
 
