@@ -28,7 +28,7 @@
 
 8. 「ルール テンプレート」 タブの検索ボックスに、**defender** と入力します。
 
-9. 結果セットで、「**Create incidents based on Microsoft Defender for Cloud**」 を選択します。このルールは、"モジュール 6 - 演習 1 - タスク 4" で構成した Defender for Cloud のコネクタによってアクティブ化されました。
+9. 結果セットで、「**Create incidents based on Microsoft Defender for Cloud**」 を選択します。このルールは、"モジュール 6 - 演習 1 - タスク 4" でアクティブ化されました。
 
 10. 右側のブレードで、「**編集**」ボタンを選択します。
 
