@@ -28,7 +28,7 @@ lab:
 
 1. 前のラボで作成した Microsoft Sentinel ワークスペースを選択します。
 
-1.  [Microsoft Sentinel on GitHub](https://github.com/Azure/Azure-Sentinel) をクリックします。Microsoft Sentinel GitHubコンテンツのページが新しいタブに表示されます。
+1.  [Microsoft Sentinel on GitHub](https://github.com/Azure/Azure-Sentinel) をコントロールキーを押しながらクリックします。Microsoft Sentinel GitHubコンテンツのページが新しいタブに表示されます。
 
 1. ASIM フォルダーを選択します。ここでは、すべての ASIM パーサーを含むテンプレートをデプロイできますが、ここではレジストリ スキーマにのみ焦点を当てます。
 
