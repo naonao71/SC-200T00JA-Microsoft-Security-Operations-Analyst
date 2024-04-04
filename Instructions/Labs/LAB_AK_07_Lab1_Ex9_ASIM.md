@@ -54,7 +54,7 @@ lab:
 
 1. 「ワースペース関数」を展開します。名前が、展開したテンプレートに対応していることに注意してください。
 
-1. **vimRegistryEventMicrosoftSecurityEvents** ワークスペースパーサーにカーソルを合わせ、**関数コードを読み込む** を選択します。
+1. **vimRegistryEventMicrosoftWindowsEvent** ワークスペースパーサーにカーソルを合わせ、**関数コードを読み込む** を選択します。
 
 1. イベント ID 4657 を解析している KQL を確認して、Microsoft Sentinel ワークスペース内のデータの分析を簡略化します。
 
