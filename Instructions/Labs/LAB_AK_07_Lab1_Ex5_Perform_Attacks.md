@@ -14,6 +14,15 @@
 
 1. タスク バーの検索で、*Command* と入力します。  検索結果にコマンド プロンプトが表示されます。  コマンド プロンプトを右クリックして、**「管理者として実行」** を選択します。表示されるユーザー アカウント制御ウィンドウで、「**はい**」を選択して、アプリの実行を許可します。
 
+1. コマンドプロンプトで、各行の後に Enter キーを押して、各行にコマンドを入力します。（WinServerの監査設定を行います）
+
+    ```
+    auditpol /set /subcategory:"Registry" /success:enable /failure:enable
+    auditpol /set /subcategory:"Process Creation" /success:enable /failure:enable
+    auditpol /set /subcategory:"Security Group Management" /success:enable /failure:enable
+    auditpol /get /category:*
+    ```
+    
 1. コマンドプロンプトで、各行の後に Enter キーを押して、各行にコマンドを入力します。
 
     ```
