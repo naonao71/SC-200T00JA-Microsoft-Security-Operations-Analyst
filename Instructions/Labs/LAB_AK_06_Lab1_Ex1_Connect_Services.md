@@ -32,7 +32,7 @@
 
 このタスクでは、Microsoft Defender for Cloud コネクタを接続します。
 
-1. 「コンテンツハブ」で、検索ウインドウに「**Microsoft Defender for Cloud**」を入力し、「**Microsoft Defender for Cloud**」を選択します。
+1. 「コンテンツハブ」で、検索ウインドウに「**Microsoft Defender for Cloud**」を入力し、「**Subscription-based Microsoft Defender for Cloud(Legacy)**」を選択します。
 
 1. コネクタ情報ブレードで「**インストール**」を選択します。
 
