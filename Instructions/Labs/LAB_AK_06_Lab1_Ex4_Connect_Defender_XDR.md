@@ -1,6 +1,7 @@
 ---
 lab:
-ラーニング パス 6 - ラボ 1 - 演習 4 - データ コネクタを使用して Defender XDR を Microsoft Sentinel に接続する
+    title: 'Exercise 4 - Connect Defender XDR to Microsoft Sentinel using data connectors'
+    module: 'Learning Path 6 - Connect logs to Microsoft Sentinel'
 ---
 
 # ラーニング パス 6 - ラボ 1 - 演習 4 - データ コネクタを使用して Defender XDR を Microsoft Sentinel に接続する
