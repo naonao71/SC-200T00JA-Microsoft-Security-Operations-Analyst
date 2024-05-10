@@ -8,8 +8,6 @@ lab:
 
 ## ラボのシナリオ
 
-![Lab overview.](../Media/SC-200-Lab_Diagrams_Mod6_L1_Ex4.png)
-
 あなたは、Microsoft Defender XDR と Microsoft Sentinel の両方をデプロイした会社で働いているセキュリティ運用アナリストです。Microsoft Sentinel を Defender XDR に接続する統合セキュリティ運用プラットフォームを準備する必要があります。次の手順では、Defender XDR コンテンツ ハブ ソリューションをインストールし、Defender XDR データ コネクタを Microsoft Sentinel にデプロイします。
 
 ###タスク 1: Defender XDR を接続する
