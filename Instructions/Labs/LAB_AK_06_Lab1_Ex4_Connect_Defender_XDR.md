@@ -1,49 +1,48 @@
 ---
 lab:
-    title: 'Exercise 4 - Connect Defender XDR to Microsoft Sentinel using data connectors'
-    module: 'Learning Path 6 - Connect logs to Microsoft Sentinel'
+ラーニング パス 6 - ラボ 1 - 演習 4 - データ コネクタを使用して Defender XDR を Microsoft Sentinel に接続する
 ---
 
-# Learning Path 6 - Lab 1 - Exercise 4 - Connect Defender XDR to Microsoft Sentinel using data connectors
+# ラーニング パス 6 - ラボ 1 - 演習 4 - データ コネクタを使用して Defender XDR を Microsoft Sentinel に接続する
 
-## Lab scenario
+## ラボのシナリオ
 
 ![Lab overview.](../Media/SC-200-Lab_Diagrams_Mod6_L1_Ex4.png)
 
-You're a Security Operations Analyst working at a company that deployed both Microsoft Defender XDR and Microsoft Sentinel. You need to prepare for the Unified Security Operations Platform connecting Microsoft Sentinel to Defender XDR. Your next step will be to install the Defender XDR Content Hub solution and deploy the Defender XDR data connector to Microsoft Sentinel.
+あなたは、Microsoft Defender XDR と Microsoft Sentinel の両方をデプロイした会社で働いているセキュリティ運用アナリストです。Microsoft Sentinel を Defender XDR に接続する統合セキュリティ運用プラットフォームを準備する必要があります。次の手順では、Defender XDR コンテンツ ハブ ソリューションをインストールし、Defender XDR データ コネクタを Microsoft Sentinel にデプロイします。
 
-### Task 1: Connect Defender XDR
+###タスク 1: Defender XDR を接続する
 
-In this task, you'll deploy the Microsoft Defender XDR connector.
+このタスクでは、Microsoft Defender XDR コネクタをデプロイします。
 
-1. Login to WIN1 virtual machine as Admin with the password: **Pa55w.rd**.  
+1. 管理者として WIN1 仮想マシンにログインします。パスワードは **Pa55w.rd** です。  
 
-1. In the Microsoft Edge browser, navigate to the Azure portal at (<https://portal.azure.com>).
+1. Microsoft Edgeブラウザーで Azure portal　(https://portal.azure.com) に移動します。
 
-1. In the **Sign in** dialog box, copy, and paste in the **Tenant Email** account provided by your lab hosting provider and then select **Next**.
+1. **サインイン**ダイアログボックスで、ラボ ホスティング プロバイダーから提供された**テナントの電子メール**アカウントをコピーして貼り付け、「**次へ**」を選択します。
 
-1. In the **Enter password** dialog box, copy, and paste in the **Tenant Password** provided by your lab hosting provider and then select **Sign in**.
+1. **パスワードの入力**ダイアログ ボックスで、ラボ ホスティング プロバイダーから提供された**テナントパスワード** をコピーして貼り付け、「**サインイン**」を選択します。
 
-1. In the Search bar of the Azure portal, type *Sentinel*, then select **Microsoft Sentinel**.
+1. Azure ポータルの検索バーに 「**Sentinel**」 と入力し、「**Microsoft Sentinel**」 を選択します。
 
-1. Select your Microsoft Sentinel Workspace you created earlier.
+1. 前のラボで作成した Microsoft Sentinel ワークスペースを選択します。
 
-1. In the Microsoft Sentinel left menus, scroll down to the **Content management** section and select **Content Hub**.
+1. Microsoft Sentinel の左側のメニューで、 [コンテンツ管理] セクションまで下にスクロールし、 [コンテンツ ハブ] を選択します。
 
-1. In the *Content hub*, search for the **Microsoft Defender XDR** solution and select it from the list.
+1. コンテンツ ハブで、Microsoft Defender XDR ソリューションを検索し、一覧から選択します。
+   
+1. Microsoft Defender XDR ソリューションの詳細ページで、 [インストール] を選択します。
 
-1. On the *Microsoft Defender XDR* solution details page select **Install**.
+1. インストールが完了したら、Microsoft Defender XDR ソリューションを検索して選択します。
 
-1. When the installation completes,  search for the **Microsoft Defender XDR** solution and select it.
+1. Microsoft Defender XDR ソリューションの詳細ページで、 [管理] を選択します
 
-1. On the *Microsoft Defender XDR* solution details page select **Manage**
+>**Note:** Microsoft Defender XDR ソリューションでは、Microsoft Defender XDR データ コネクタ、ハンティング クエリ、ブック、分析ルールがインストールされます。
 
->**Note:** The *Microsoft Defender XDR* solution installs the *Microsoft Defender XDR* Data connector, Hunting queries, Workbooks and Analytics rules.
+1. **Microsoft Defender XDR** データ コネクタのチェック ボックスをオンにし、[**コネクタ ページを開く**] を選択します。
 
-1. Select the *Microsoft Defender XDR* Data connector check-box, and select **Open connector page**.
+1. [構成] セクションの [手順] タブで、[**これらの製品の Microsoft インシデント作成ルールをすべてオフにすることをお勧めします。**　のチェック ボックスの選択を解除します。 [**インシデントとアラートを接続する**] ボタンを選択します。
 
-1. In the *Configuration* section, under the *Instructions* tab, **deselect** the checkbox for the *Turn off all Microsoft incident creation rules for these products. Recommended*, and select the **Connect incidents & alerts** button.
-
-1. You should see a message that the connection was successful.
-
-## You have completed the lab
+1. 接続が成功したことを示すメッセージが表示されます。
+   
+## これでラボは終了です
