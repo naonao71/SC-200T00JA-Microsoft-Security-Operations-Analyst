@@ -134,7 +134,7 @@
 21. PowerShell の出力の最後の行の指示に従って、デバイスの登録を完了します。 これには、ブラウザーを介したデバイスの認証が含まれます。  URL (https://microsoft.com/devicelogin) をコピーして、新しい Microsoft Edge ブラウザーのタブに入力します。「Windows PowerShell」ウィンドウに戻り、認証のためのコードをコピーして、以前に開いたタブに貼り付け、「**次へ**」を選択します。テナントの管理者アカウントを選択して、「**Are you trying to sign in to Azure Connected Machine Agent?**」 (Azure Connected Machine Agent へのサインインを試みていますか?) ウィンドウで、「**続行**」を選択します。 
 
 23. 「Windows PowerShell」ウィンドウで、**"Successfully Onboarded Resource to Azure"** (リソースが Azure に正常にオンボードされました) というメッセージが表示されたら、Azure portal ページに戻り、**スクリプトのダウンロードと実行** タブで「**閉じる**」をクリックします。「**Add servers with Azure Arc**」 (Azure Arc にサーバーを追加する) を閉じて、Azure Arc の「**サーバー**」ページに戻ります。
--->
+--!>
 
 17. スクリプトの進行中に、Auzre アカウントが要求たら既存のアカウントを選択します。ブラウザの別ウィンドウが起動し、「Authentication cmplete」が表示されます。
 
@@ -144,6 +144,7 @@
 
   > **注:** この処理には数分かかります。
 
+<!--
 ### タスク 5: オンプレミスのサーバーを保護する。
 
 このタスクでは、WINServer 仮想マシンにデータ収集ルール (DCR) を追加して、Azure Monitor エージェントを手動でインストールします。
@@ -195,5 +196,6 @@
 19. 「設定」セクションの「拡張機能」を選択します。
 20. **AzureMonitorWindowsAgent** が「成功」の状態で一覧表示されます。
 21. 次のラボに進み、しばらくたってから Microsoft Defender for Cloud の [インベントリ] セクションを確認し、WINServer が含まれていることを確認できます。
+--!>
 
 # 演習 2 に進みます。
