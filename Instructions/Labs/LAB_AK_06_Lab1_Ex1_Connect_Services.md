@@ -32,7 +32,7 @@
 
 このタスクでは、Microsoft Defender for Cloud コネクタを接続します。
 
-1. 「コンテンツハブ」で、検索ウインドウに「**Microsoft Defender for Cloud**」を入力し、「**Subscription-based Microsoft Defender for Cloud(Legacy)**」を選択します。
+1. 「コンテンツハブ」で、検索ウインドウに「**Microsoft Defender for Cloud**」を入力し、「**Tenant-based Microsoft Defender for Cloud (Preview)**」を選択します。
 
 1. コネクタ情報ブレードで「**インストール**」を選択します。
 
@@ -40,6 +40,9 @@
 
 1. 「**Microsoft Defender for Cloud**」を選択し、コネクタ情報ブレードで「**コネクタページを開く**」を選択します。
 
+1. 「接続」ボタンを選択します。
+
+<!--
 1. 構成領域の [サブスクリプション] で、[Azure Pass - スポンサー プラン] サブスクリプションのチェック ボックスをオンにし、 **[状態]** オプションを右側にスライドして **[接続済み]** を示します。
 
 1. [状態] が *[接続済み]* になり、[双方向の同期] が *[有効]* になるはずです。
@@ -52,7 +55,7 @@
 
 1. 分析ルール ウィザード で「Next:自動応答>」、「Next:Review and create」、「保存」を選択します。
 
-<!--
+
 1. 下にスクロールし、[Create incidents - Recommended!](インシデントの作成 - 推奨) 領域で、 **Enabled** を選択します。 このオプションを選択すると、このサービスに対して分析ルールが自動的に作成されます。 ここで有効にしなくても、後で *[分析]* ブレードを使って、手動で追加したり、構成を変更したりできます。
 -->
 
